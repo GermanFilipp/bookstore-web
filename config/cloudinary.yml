@@ -1,0 +1,9 @@
+development:
+  cloud_name: "dysdga6x1"
+  api_key: "899932216464759"
+  api_secret: "JUx6pgGsSqYN5MlhbPGrrmJ3Zm8"
+
+production:
+    cloud_name: "dysdga6x1"
+    api_key: "899932216464759"
+    api_secret: "JUx6pgGsSqYN5MlhbPGrrmJ3Zm8"

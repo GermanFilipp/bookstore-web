@@ -1,0 +1,17 @@
+<% @books.each do |book|%>
+
+   <div  class="col-md-3 book">
+
+     <div class="thumbnail">
+       <%= link_to image_tag book.image_url(:thumb)%>
+       <h5> <p class="title"><%= link_to book.title,  book_path(book)%></p></h5>
+       <hr>
+       <p class="price"><%=number_to_currency book.price%></p>
+     </div>
+
+   </div>
+
+<% end %>
+<div class="paginate">
+  <%= paginate @books%>
+</div>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Rails bookstore: development" uuid="f64e3ac6-2024-41e1-9d8f-c12270d2d887">
+      <first-sync>true</first-sync>
+    </data-source>
+    <data-source name="Rails bookstore: test" uuid="54ead687-9537-44d7-91bb-7d37a3bcfb2f">
+      <first-sync>true</first-sync>
+    </data-source>
+    <data-source name="Rails bookstore: production" uuid="64b20be6-3acc-4219-92ff-0dc06953b599">
+      <first-sync>true</first-sync>
+    </data-source>
+  </component>
+</project>

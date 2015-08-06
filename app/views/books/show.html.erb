@@ -1,0 +1,32 @@
+<%= render 'books/book'%>
+<div class="container">
+
+  <div class="col-md-12 col-lg-11 clearfix">
+    <div class="thumbnail row">
+     <ul class="nav nav-pills">
+       <li><h4>Reviews</h4></li>
+       <li><%= link_to "Add Review for this book", new_book_rating_path(customer_id: current_customer.id, book_id: params[:id]) %></li>
+     </ul>
+
+      <%@ratings.each  do |rating| %>
+	      <ul class="nav nav-pills" >
+	        <hr>
+	        <div>
+	          <% (1..10).each do |rating_number|%>
+	           <% if rating_number <= rating.rating%>
+		          <i class="fa fa-star fa-2x" style="color: rgb(255,215,0)"></i>
+			          <% else %>
+		          <i class="fa fa-star-o fa-2x"></i>
+			          <% end %>
+	          <% end %>
+	          <%= rating.title%>
+	          <%= rating.created_at.strftime("%d %B %Y")%>
+	        </div>
+	        <li> by: <%= rating.customer.first_name%> <%=rating.customer.last_name%></li></br>
+	        <li> review: <%= rating.review%></li>
+	      </ul>
+
+      <% end %>
+    </div>
+  </div>
+</div>

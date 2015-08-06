@@ -1,0 +1,12 @@
+<div class="col-sm-3  col-md-3 sidebar">
+  <h3>SHOP BY CATEGORIES</h3>
+  <ul class="nav nav-sidebar">
+
+     <% @categories.each do |category|%>
+       <li>
+         <%= link_to category.title, category_path(category),  :'data-id' => category.id %>
+       </li>
+    <%end%>
+
+  </ul>
+</div>

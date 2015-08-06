@@ -1,0 +1,19 @@
+<div class="main">
+
+  <div class="container-fluid col-lg-12 main-conteiner">
+
+    <div class="row col-lg-9">
+      <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li> <%= link_to 'Shop',root_path%></li>
+        <li class="active"><%= @category.title%></li>
+      </ol>
+      <h1 class="page-header">Categories - <%= @category.title%> </h1>
+      <%= render 'books/body'%>
+
+    </div>
+
+  </div>
+
+  <%= render 'categories/sidebar'%>
+</div>

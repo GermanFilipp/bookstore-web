@@ -1,0 +1,45 @@
+<header >
+  <nav class="navbar navbar-fixed-top navbar-default" role="navigation" >
+    <div class="container-fluid">
+
+      <div class="navbar-header">
+        <a class="navbar-brand logo" >The Bookstore</a>
+      </div>
+
+      <nav>
+        <ul class="nav navbar-nav">
+          <li ><%= link_to "HOME",    root_path %></li>
+          <li ><%= link_to "SHOP",    books_path %></li>
+          <% if customer_signed_in? %>
+             <li>
+               <i class="glyphicon glyphicon-shopping-cart">
+                 <%= link_to_unless_current('CART', order_item_path) %>:<%= order_details %>
+               </i>
+             </li>
+          <% end %>
+
+        </ul>
+      </nav>
+
+
+
+      <nav>
+        <ul class="nav navbar-nav navbar-right">
+          <% if customer_signed_in? %>
+	          <% if current_customer.admin?%>
+                <li><%= link_to "Admin Dashboard", rails_admin_path %></li>
+	          <% end %>
+          <li><%= link_to "Settings",    edit_customer_path %></li>
+          <li><%= link_to "Orders",    '#' %></li>
+          <li><%= link_to "Sign out", destroy_customer_session_path, :method => :delete %></li>
+	          <%else%>
+             <li><%= link_to "Sign in",    new_customer_session_path %></li>
+             <li><%= link_to "Sign up",    new_customer_registration_path %></li>
+          <%end%>
+        </ul>
+      </nav>
+
+    </div>
+  </nav>
+</header>
+

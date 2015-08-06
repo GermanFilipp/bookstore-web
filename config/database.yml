@@ -1,0 +1,21 @@
+# SQLite version 3.x
+#   gem install sqlite3
+#
+#   Ensure the SQLite 3 gem is defined in your Gemfile
+#   gem 'sqlite3'
+#
+defaults: &default
+  adapter: sqlite3
+  encoding: utf8
+
+development:
+  <<: *default
+  database: db/development.sqlite3
+
+test:
+  <<: *default
+  database: db/development.sqlite3_test
+
+production:
+  <<: *default
+  database: db/development.sqlite3_production
