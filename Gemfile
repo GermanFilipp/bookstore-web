@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-
+ruby '2.0.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.2'
 # Use sqlite3 as the database for Active Record
@@ -54,7 +54,7 @@ gem 'simple_form'
 gem 'reform'
 
 gem 'cloudinary'
-
+gem 'rails_12factor'
 gem 'aasm', '~> 4.2.0'
 gem 'rails_admin_aasm'
 # Use ActiveModel has_secure_password
