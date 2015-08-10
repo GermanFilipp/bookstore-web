@@ -1,9 +1,11 @@
 <div class="stages">
-  <ul class="nav nav-pills">
-    <li><%= link_to("ADDRESS", wizard_path(:add_address))%></li>
-    <li><%= link_to("DELIVERY", wizard_path(:check_delivery))%></li>
-    <li><%= link_to("PAYMENT", wizard_path(:add_payment))%></li>
-    <li><%= link_to("CONFIRM", wizard_path(:confirm))%></li>
-    <li><%= link_to("COMPLETE", wizard_path(:complete))%></li>
-  </ul>
+  <% wizard_steps.each do |step|%>
+     <% if current_step_index > step_index_for(step) %>
+        <%= link_to(step.upcase, wizard_path(step))%>
+     <% elsif current_step_index == step_index_for(step) %>
+        <span><%= step.upcase %></span>
+     <% else %>
+        <%= step.upcase %>
+     <% end %>
+  <% end %>
 </div>

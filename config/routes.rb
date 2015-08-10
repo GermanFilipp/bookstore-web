@@ -8,26 +8,24 @@ Rails.application.routes.draw do
   root 'carousels#index'
   #routes app
   resources :carousels, only: [:index]
-  resources :books, only: [:index, :show]
   resources :categories, only: [:show]
-
-
-  resource :order_item, only: [:create, :show,:update,:destroy] do
-    delete ':item_id', action: 'remove_item', as: 'item', item_id: /[0-9]+/
-  end
-
   resources :order_steps, only: [:show, :update]
+  resources :orders, only: [:index, :show]
 
-  resources :books do
+  resources :books, only: [:index, :show] do
     resources :ratings, only: [:create, :new]
   end
 
+  resource :order_item, only: [:create, :show,:update,:destroy] do
+    delete ':item_id', action: 'remove_item', as: 'item'
+  end
+
   resource :customer, only: [:edit,:destroy] do
-    put 'billing_address', action: 'billing_address'
-    put 'shipping_address', action: 'shipping_address'
+    put 'address', action: 'address'
     put 'email',   action: 'email'
     put 'password',action: 'password'
   end
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

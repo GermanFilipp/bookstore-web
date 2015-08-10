@@ -13,7 +13,12 @@
           <% if customer_signed_in? %>
              <li>
                <i class="glyphicon glyphicon-shopping-cart">
-                 <%= link_to_unless_current('CART', order_item_path) %>:<%= order_details %>
+                 <%= link_to_unless_current('CART', order_item_path) %>:
+                 <%  if (current_customer_order.nil? || current_customer_order.total_items == 0) %>
+                    <%= '(EMPTY)' %>
+	                 <% else %>
+                    <%= "(#{current_customer_order.total_items}) #{number_to_currency(current_customer_order.total_price)}" %>
+	                 <%end%>
                </i>
              </li>
           <% end %>
@@ -30,7 +35,7 @@
                 <li><%= link_to "Admin Dashboard", rails_admin_path %></li>
 	          <% end %>
           <li><%= link_to "Settings",    edit_customer_path %></li>
-          <li><%= link_to "Orders",    '#' %></li>
+          <li><%= link_to "Orders",    orders_path %></li>
           <li><%= link_to "Sign out", destroy_customer_session_path, :method => :delete %></li>
 	          <%else%>
              <li><%= link_to "Sign in",    new_customer_session_path %></li>

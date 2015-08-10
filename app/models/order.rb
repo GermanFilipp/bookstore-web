@@ -1,9 +1,14 @@
 class Order < ActiveRecord::Base
    include AASM
   belongs_to :customer
-  belongs_to :credit_card
-  belongs_to :billing_address, class_name: "Address"
-  belongs_to :shipping_address, class_name: "Address"
+
+
+
+   belongs_to :credit_card
+   belongs_to :shipping_address, class_name: "Address"
+   belongs_to :billing_address, class_name: "Address"
+
+   belongs_to :delivery_method
 
   has_many   :order_items
 

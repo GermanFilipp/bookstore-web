@@ -33,7 +33,7 @@
         </div>
         <div class="form-inline pull-right">
           <%= submit_tag('UPDATE', :class => 'btn btn-default') %>
-          <%= link_to('CHECKOUT', order_step_path(:add_address), :class => 'btn btn-default') %>
+          <%= link_to('CHECKOUT', order_step_path(:address), :class => 'btn btn-default') %>
         </div>
         <%= link_to('EMPTY CART', order_item_path, {:class => 'btn btn-default', :method => 'delete'}) %>
         <%= link_to('CONTINUE SHOPPING', books_path, {:class => 'btn btn-default'}) %>

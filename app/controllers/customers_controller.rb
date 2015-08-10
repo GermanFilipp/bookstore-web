@@ -1,5 +1,5 @@
 class CustomersController < ApplicationController
-
+  include UpdateCustomer
   before_action  :set_data
 
   def edit
@@ -24,12 +24,15 @@ class CustomersController < ApplicationController
     end
   end
 
-  def billing_address
-   #in progress
-  end
+  def address
+    type = params[:type] || 'billing'
+    if @customer.save_address(addr_params(type).merge(type: type))
+      redirect_to edit_customer_path, :notice => 'Your '+type+' address was updated.'
+    else
+      instance_variable_set("@#{type}_address", Address.new(addr_params(type)))
 
-  def shipping_address
-    #in progress
+      edit
+    end
   end
 
   def destroy
@@ -48,16 +51,7 @@ class CustomersController < ApplicationController
 
   end
 
-  def billing_address_params
-    params.require(:billing_address).
-        permit(:first_name, :last_name, :address, :city, :country_id, :zipcode, :phone).merge(customer_id: @customer.id)
-  end
- # duplicate params
-  def shipping_address_params
-    params.require(:shipping_address).
-        permit(:first_name, :last_name, :address, :city, :country_id, :zipcode, :phone).merge(customer_id: @customer.id)
-  end
-  def user_params
-    params.require(:user).permit(:email, :current_password, :password, :password_confirmation)
+  def customer_params
+    params.require(:customer).permit(:email, :current_password, :password, :password_confirmation)
   end
 end
