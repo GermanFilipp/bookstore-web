@@ -3,63 +3,21 @@
   <div class="row">
     <div class="col-md-6 col-lg-3 col-lg-offset-2">
       <h2>BILLING ADDRESS</h2>
-      <%= form_tag(billing_address_customer_path, :method => 'put') do %>
-         <div class="form-group">
-           <%= text_field_tag('billing_address[first_name]', @billing_address.first_name, :class => 'form-control', :placeholder => 'First name') %>
-         </div>
-         <div class="form-group">
-           <%= text_field_tag('billing_address[last_name]', @billing_address.last_name, :class => 'form-control', :placeholder => 'Last name') %>
-         </div>
-         <div class="form-group">
-           <%= text_field_tag('billing_address[address]', @billing_address.address, :class => 'form-control', :placeholder => 'Street address') %>
-         </div>
-         <div class="form-group">
-           <%= text_field_tag('billing_address[city]', @billing_address.city, :class => 'form-control', :placeholder => 'City') %>
-         </div>
-         <div class="form-group">
-           <div class="input-group">
-             <div class="input-group-addon">Country</div>
-             <%= select_tag('billing_address[country_id]', options_for_select(countries, @billing_address.country_id), :class => 'form-control')%>
-           </div>
-         </div>
-         <div class="form-group">
-           <%= text_field_tag('billing_address[zipcode]', @billing_address.zipcode, :class => 'form-control', :placeholder => 'Zip code') %>
-         </div>
-         <div class="form-group">
-           <%= text_field_tag('billing_address[phone]', @billing_address.phone, :class => 'form-control', :placeholder => 'Phone number') %>
-         </div>
-
+      <%= form_tag(address_customer_path, :method => 'put') do %>
+         <%= render 'errors', area: 'billing_address' %>
+         <%= render 'address', type: 'billing', address: @billing_address %>
          <%= submit_tag('SAVE', :class => 'btn btn-default') %>
+
+
       <% end %>
     </div>
     <div class="col-md-6 col-lg-3 col-lg-offset-2">
       <h2>SHIPPING ADDRESS</h2>
-      <%= form_tag(shipping_address_customer_path, :method => 'put') do %>
-         <div class="form-group">
-           <%= text_field_tag('shipping_address[first_name]', @shipping_address.first_name, :class => 'form-control', :placeholder => 'First name') %>
-         </div>
-         <div class="form-group">
-           <%= text_field_tag('shipping_address[last_name]', @shipping_address.last_name, :class => 'form-control', :placeholder => 'Last name') %>
-         </div>
-         <div class="form-group">
-           <%= text_field_tag('shipping_address[address]', @shipping_address.address, :class => 'form-control', :placeholder => 'Street address') %>
-         </div>
-         <div class="form-group">
-           <%= text_field_tag('shipping_address[city]', @shipping_address.city, :class => 'form-control', :placeholder => 'City') %>
-         </div>
-         <div class="form-group">
-           <div class="input-group">
-             <div class="input-group-addon">Country</div>
-             <%= select_tag('shipping_address[country_id]', options_for_select(countries, @shipping_address.country_id), :class => 'form-control')%>
-           </div>
-         </div>
-         <div class="form-group">
-           <%= text_field_tag('shipping_address[zipcode]', @shipping_address.zipcode, :class => 'form-control', :placeholder => 'Zip code') %>
-         </div>
-         <div class="form-group">
-           <%= text_field_tag('shipping_address[phone]', @shipping_address.phone, :class => 'form-control', :placeholder => 'Phone number') %>
-         </div>
+      <%= form_tag(address_customer_path, :method => 'put') do %>
+
+         <%= render 'address', type: 'shipping', address: @shipping_address %>
          <%= submit_tag('SAVE', :class => 'btn btn-default') %>
+
       <% end %>
     </div>
   </div>
@@ -68,7 +26,7 @@
       <h2>E-MAIL</h2>
       <%= form_tag(email_customer_path, :method => 'put') do %>
          <div class="form-group">
-           <%= email_field_tag('user[email]', @customer.email, :class => 'form-control', :placeholder => 'Enter email')%>
+           <%= email_field_tag('customer[email]', @customer.email, :class => 'form-control', :placeholder => 'Enter email')%>
          </div>
          <%= submit_tag('SAVE', :class => 'btn btn-default') %>
       <% end %>
@@ -77,16 +35,16 @@
       <h2>PASSWORD</h2>
       <%= form_tag(password_customer_path, :method => 'put', :autocomplete => 'off') do %>
          <div class="form-group">
-           <%= label_tag('user[current_password]', 'Current password')%>
-           <%= password_field_tag('user[current_password]', '', :class => 'form-control', :placeholder => 'Type current password') %>
+           <%= label_tag('customer[current_password]', 'Current password')%>
+           <%= password_field_tag('customer[current_password]', '', :class => 'form-control', :placeholder => 'Type current password') %>
          </div>
          <div class="form-group">
-           <%= label_tag('user[password]', 'New password')%>
-           <%= password_field_tag('user[password]', '', :class => 'form-control', :placeholder => 'Type new password') %>
+           <%= label_tag('customer[password]', 'New password')%>
+           <%= password_field_tag('customer[password]', '', :class => 'form-control', :placeholder => 'Type new password') %>
          </div>
          <div class="form-group">
-           <%= label_tag('user[password_confirmation]', 'New password confirmation')%>
-           <%= password_field_tag('user[password_confirmation]', '', :class => 'form-control', :placeholder => 'Type new password confirmation') %>
+           <%= label_tag('customer[password_confirmation]', 'New password confirmation')%>
+           <%= password_field_tag('customer[password_confirmation]', '', :class => 'form-control', :placeholder => 'Type new password confirmation') %>
          </div>
          <%= submit_tag('SAVE', :class => 'btn btn-default') %>
       <% end %>
