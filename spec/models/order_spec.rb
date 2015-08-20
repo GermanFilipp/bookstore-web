@@ -121,23 +121,5 @@ RSpec.describe Order, type: :model do
     end
   end
 
-#need to do
-
-  context '#set_completed_at' do
-    it 'sets current date & time in completed_at field' do
-      Timecop.freeze
-      order.send(:set_completed_at)
-      expect(order.completed_at).to eq(Time.zone.now)
-    end
-
-    it 'sets current date & time wich saves only after checkout' do
-      expect(order.completed_at).to be nil
-      order.send(:set_completed_at)
-      order.reload
-      expect(order.completed_at).to be nil
-      order.checkout!
-      expect(order.completed_at).not_to be nil
-    end
-  end
 
 end
