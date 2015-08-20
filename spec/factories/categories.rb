@@ -1,6 +1,6 @@
 FactoryGirl.define do
-  factory :categories do
-    title { Faker::Lorem.word }
-  end
+  factory :category do
+    title {Faker::Commerce.product_name}
 
+  end
 end

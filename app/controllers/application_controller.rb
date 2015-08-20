@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_filter :authenticate_customer!
-  helper_method :current_customer_order, :countries
+  helper_method :current_customer_order, :countries, :date_format
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_path, :alert => exception.message
   end
@@ -18,6 +18,10 @@ class ApplicationController < ActionController::Base
 
   def countries
     @countries ||= Country.order(:name).map{|country| [country.name, country.id]}
+  end
+
+  def date_format(date)
+    date.strftime("%d.%m.%Y %I:%M %p")
   end
 
 end

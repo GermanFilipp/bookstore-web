@@ -4,8 +4,8 @@
 
     <div class="row col-lg-9">
       <ol class="breadcrumb">
-        <li><a href="#">Home</a></li>
-        <li> <%= link_to 'Shop',root_path%></li>
+        <li><%= link_to 'Home',root_path%></li>
+        <li> <%= link_to 'Shop',books_path%></li>
         <li class="active"><%= @category.title%></li>
       </ol>
       <h1 class="page-header">Categories - <%= @category.title%> </h1>

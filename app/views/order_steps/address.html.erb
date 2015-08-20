@@ -5,13 +5,13 @@
 <div class="row">
   <div class="col-md-4 col-lg-3 col-lg-offset-1">
     <h2>BILLING ADDRESS</h2>
-    <%= render 'customers/errors', area: 'billing_address' %>
+
        <%= render 'customers/address', type: 'billing', address: @billing_address %>
   </div>
 
   <div class="col-md-4 col-lg-3 col-lg-offset-1">
     <h2>SHIPPING ADDRESS</h2>
-    <%= render 'customers/errors', area: 'billing_address' %>
+
        <%= render 'customers/address', type: 'shipping', address: @shipping_address %>
     <div class="checkbox">
       <label><%= check_box_tag('use_billing_address', 1, (!@order.billing_address_id.nil? && @order.billing_address==@order.shipping_address)) %> Use billing address</label>

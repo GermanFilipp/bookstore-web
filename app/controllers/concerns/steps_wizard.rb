@@ -13,19 +13,30 @@ module StepsWizard
       @notice = 'Your order address have not been set correctly'
        return
     end
-    @delivery = DeliveryMethod.active
+    @delivery_methods = DeliveryMethod.active
     delivery_method_id = params[:delivery_method_id] || @order.delivery_method_id
+    unless delivery_method_id
+      @delivery_method =  @delivery_methods.first
+    else
+      @delivery_method = @delivery_methods.select{|delivery_method| delivery_method.id == delivery_method_id }.first
+    end
   end
 
   def show_payment
-
+    if @order.delivery_method_id.nil?
+      @notice = 'Delivery method has not been set'
+      return
+    end
+    @credit_card ||= @order.credit_card || CreditCard.new
   end
-  def show_confirm
 
+  def show_confirm
+    @notice = 'Credit card details have not been saved!' if @order.credit_card_id.nil?
   end
 
   def show_complete
 
+    @notice = 'Order processing has not been finished yet!' if @order.nil?
   end
 
   def update_address
@@ -38,15 +49,16 @@ module StepsWizard
   end
 
   def update_delivery
-
+    @order.update(total_price: @order.total_price+delivery_params[:delivery_price].to_i)
+    return @notice = 'Shipping method was successfully saved.' if @order.update(delivery_params)
   end
 
   def update_payment
-
+    return @notice = 'Payment data was saved.'if @order.save_credit_card(credit_card_params)
   end
 
   def update_confirm
-
+    @order.checkout!
   end
 
   def update_complete
@@ -65,5 +77,15 @@ module StepsWizard
     unless current_customer.save_address(addr_params(type).merge(type: type))
       return false
     end
+  end
+
+  def delivery_params
+    params.permit(:delivery_method_id, :delivery_price)
+  end
+
+  def credit_card_params
+    params.require(:credit_card)
+        .permit(:number, :expiration_month, :expiration_year, :CVV)
+        .merge(customer_id: current_customer.id)
   end
 end

@@ -9,7 +9,7 @@ class CustomersController < ApplicationController
   end
 
   def email
-    if @customer.update(user_params)
+    if @customer.update(customer_params)
       redirect_to edit_customer_path, :notice => 'Your e-mail was updated.'
     else
       edit
@@ -17,7 +17,7 @@ class CustomersController < ApplicationController
   end
 
   def password
-    if @customer.update_with_password(user_params)
+    if @customer.update_with_password(customer_params)
       redirect_to edit_customer_path, :notice => 'Your password was updated.'
     else
       edit

@@ -1,9 +1,8 @@
 FactoryGirl.define do
   factory :order_item do
+    book { FactoryGirl.create(:book) }
+    order { FactoryGirl.create(:order) }
     price { Faker::Commerce.price }
-    quantity { Faker::Number.number(1) }
-    book nil
-    order nil
+    quantity { rand(1..20) }
   end
-
 end

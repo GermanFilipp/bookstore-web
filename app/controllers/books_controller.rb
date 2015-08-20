@@ -1,5 +1,7 @@
 class BooksController < ApplicationController
+=begin
   before_action :authenticate_customer!
+=end
 
   def index
     @books = Book.page params[:page]

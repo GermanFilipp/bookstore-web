@@ -15,7 +15,7 @@ class Customer < ActiveRecord::Base
   belongs_to :shipping_address, class_name: "Address"
 
   accepts_nested_attributes_for :addresses
-      validates :email,presence: true
+  validates :email,presence: true
   validates :email, uniqueness: { case_sensitive: false }
 
 
@@ -38,16 +38,12 @@ class Customer < ActiveRecord::Base
     self.orders.find_or_create_by(state: Order::STATE_IN_PROGRESS)
   end
 
-  def order_in_queue
-    self.orders.where(state: 'in queue')
+  def last_orders
+    self.orders.already_completed.order(state: :asc, completed_date: :desc).first
   end
 
-  def order_in_delivery
-    self.orders.where(state: 'in delivery')
-  end
-
-  def order_delivered
-    self.orders.where(state: 'delivered')
+  def all_orders
+    self.orders.already_completed.order(state: :asc, completed_date: :desc)
   end
 
   def save_address(address_params= {})

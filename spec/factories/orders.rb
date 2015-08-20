@@ -1,9 +1,14 @@
 FactoryGirl.define do
   factory :order do
-    total_price Faker::Commerce.price
-    complited_date { Faker::Time.between(6.days.ago, Time.now) }
-    state "in progress"
+    customer {FactoryGirl.create(:customer)}
+
+    factory :already_completed do
+      state do
+        a = ["in queue", "in delivery", "delivered", "canceled"]
+        a.sample
+      end
+      completed_date { Time.zone.now }
+    end
 
   end
-
 end

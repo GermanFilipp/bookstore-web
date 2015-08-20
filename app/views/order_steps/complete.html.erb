@@ -1,2 +1,44 @@
-<%= render 'steps' %>
-<h1>show#complete</h1>
+<div class="checkout clearfix">
+  <h1>Order <%= @order.number %></h1>
+  <div class="row">
+    <div class="col-md-3">
+      <h2>Shipping Address</h2>
+      <%= render 'addr_details', address: @order.shipping_address %>
+    </div>
+    <div class="col-md-3">
+      <h2>Billing Address</h2>
+      <%= render 'addr_details', address: @order.billing_address %>
+    </div>
+    <div class="col-md-3">
+      <h2>Shipping method</h2>
+      <div class="details">
+        <%= @order.delivery_method.name %>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <h2>Payment information</h2>
+      <div class="details">
+        <%= @order.credit_card.display_number %><br />
+        <%= @order.credit_card.display_month %>/<%= @order.credit_card.expiration_year %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="order clearfix">
+  <%= render 'order_details', order_items: @order.books %>
+  <div class="clearfix">
+    <div class="pull-right">
+      <div class="subtotal clearfix">
+        <div class="pull-right"><strong><%= number_to_currency(@order.total_price) %></strong><br /><strong><%= number_to_currency(@order.delivery_method.price) %></strong></div>
+        <div class="pull-right">SUBTOTAL: &nbsp; <br />SHIPPING: &nbsp; </div>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix total">
+    <div class="pull-right subtotal">
+      ORDER TOTAL: &nbsp; <strong><%= number_to_currency(@order.total_price+@order.delivery_method.price) %></strong>
+    </div>
+  </div>
+  <%= link_to('GO BACK TO STORE', root_path, {:class => 'btn btn-default'}) %>
+</div>
+

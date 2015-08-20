@@ -1,0 +1,25 @@
+<div class="clearfix">
+  <div class="order-back"> <%= link_to '<< Back to orders', orders_path %></div>
+  <h1 class="pull-left">Order <%= @order.number %></h1>
+  <div class="order-status"> &nbsp; <%= @order.state %></div>
+</div>
+<div class="order clearfix">
+  <% unless @order_items.blank? %>
+     <%= render 'order_steps/order_details', order_items: @order_items %>
+     <div class="clearfix">
+       <div class="pull-right">
+         <div class="subtotal clearfix">
+           <div class="pull-right"><strong><%= number_to_currency(@order.total_price) %></strong><br /><strong><%= number_to_currency(@order.delivery_price) %></strong></div>
+           <div class="pull-right">SUBTOTAL: &nbsp; <br />SHIPPING: &nbsp; </div>
+         </div>
+       </div>
+     </div>
+     <div class="clearfix total">
+       <div class="pull-right subtotal">
+         ORDER TOTAL: &nbsp; <strong><%= number_to_currency(@order_total) %></strong>
+       </div>
+     </div>
+  <% else %>
+     <p>Order is empty&hellip;</p>
+  <% end %>
+</div>

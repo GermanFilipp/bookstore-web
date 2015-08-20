@@ -71,21 +71,22 @@ group :development, :test do
   gem 'sqlite3'
   gem 'byebug'
   gem 'rspec-rails'
+  gem 'rspec-expectations'
   gem 'capybara'
   gem 'factory_girl_rails'
-  gem 'factory_girl'
-  gem 'shoulda-matchers'
   gem 'haml'
-  gem 'faker'
+  gem 'rspec-activemodel-mocks'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
-
+  gem 'capybara'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
 
 group :test do
 
+  gem 'shoulda-matchers'
+  gem 'faker'
   gem 'database_cleaner'
 end
 

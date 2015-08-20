@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :rating do
-    review { Faker::Lorem.paragraph }
-    rating 5
-    customer nil
-    book nil
+    customer {FactoryGirl.create(:customer)}
+    book {FactoryGirl.create(:book)}
+    title {Faker::Name.title}
+    review {Faker::Lorem.sentence}
+    rating {Faker::Number.between(1, 10)}
   end
-
 end

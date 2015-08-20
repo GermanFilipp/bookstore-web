@@ -14,4 +14,5 @@ class Book < ActiveRecord::Base
   def self.by_category id
     where(category_id: id)
   end
+
 end

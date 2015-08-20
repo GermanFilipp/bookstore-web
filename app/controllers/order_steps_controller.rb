@@ -11,33 +11,16 @@ class OrderStepsController < ApplicationController
     send("show_#{step}")
     redirect_to previous_wizard_path, :notice => @notice and return unless @notice.nil?
     render_wizard
-=begin
-    case step
-      when :address
-        @billing_address ||= current_customer.billing_address || Address.new
-        @shipping_address ||= current_customer.shipping_address || Address.new
-        @order = current_customer_order
-      when :delivery
-        @delivery = DeliveryMethod.all
-      when :payment
-        @credit_card ||= current_customer.credit_card || CreditCard.new
-      when :confirm
-
-      when :complete
-
-    end
-    render_wizard
-=end
   end
 
   def update
     send("update_#{step}")
-    redirect_to next_wizard_path, :notice => @notice and return if @errors.length == 0
-
+    redirect_to next_wizard_path, :notice => @notice
+    send("show_#{step}")
   end
 
   private
   def setter
-    @order = current_customer_order
+    @order =(step == :complete) ? current_customer.last_orders : current_customer_order
   end
 end

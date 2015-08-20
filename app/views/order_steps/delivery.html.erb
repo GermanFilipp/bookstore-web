@@ -1,2 +1,47 @@
 <%= render 'steps' %>
-<h1>show#delivery</h1>
+<h1>Checkout</h1>
+<%= form_tag(wizard_path, :method => 'put') do %>
+   <div class="row">
+     <div class="col-md-4">
+       <h2>DELIVERY METHOD</h2>
+       <% if @delivery_methods.blank? %>
+          There are no delivery methods active.
+       <% else %>
+          <%= hidden_field_tag('shipping_cost', @delivery_method.price) %>
+          <% @delivery_methods.each do |delivery| %>
+             <div class="radio">
+               <label>
+                 <%= hidden_field_tag("delivery_price", delivery.price) %>
+                 <%= radio_button_tag('delivery_method_id', delivery.id, delivery.id==@delivery_method.id) %>
+                 <%= delivery.name %> + <%= number_to_currency(delivery.price) %>
+               </label>
+             </div>
+          <% end %>
+       <% end %>
+     </div>
+     <div class="col-md-4">
+       &nbsp;
+     </div>
+     <div class="col-md-4">
+       <div class="pull-right">
+         <h2>ORDER SUMMARY</h2>
+         <div class="summary-price">
+           <div><span><%= number_to_currency(@order.total_price) %></span><span id="checkout_items_total" class="hide"><%= @order.total_price %></span></div>
+           <div><span><%= number_to_currency(@delivery_method.price) %></span><span id="checkout_shipping" class="hide"><%= @delivery_method.price %></span></div>
+           <div><span><%= number_to_currency(@order.total_price+@delivery_method.price) %></span><span id="checkout_order_total" class="hide"><%= (@order.total_price+@delivery_method.price) %></span></div>
+         </div>
+         <div class="summary-title">
+           <nobr>ITEMS TOTAL:</nobr><br />
+           <nobr>SHIPPING:</nobr><br />
+           <nobr>ORDER TOTAL:</nobr>
+         </div>
+       </div>
+     </div>
+   </div>
+   <div>
+     <%= button_tag('SAVE AND CONTINUE', :class => 'btn btn-default', :type => 'submit', :name => 'shipping') %>
+     <%- unless @order.delivery_method_id.nil? %>
+        <%= link_to('CONTINUE', next_wizard_path, {:class => 'btn btn-default checkout'}) %>
+     <%- end %>
+   </div>
+<% end %>

@@ -1,1 +1,47 @@
-<h1>Hello world</h1>
+<div class="orders clearfix">
+  <h1>Orders</h1>
+  <h2>In progress</h2>
+  <% unless @order_items.blank? %>
+     <div class="order">
+
+       <div class="clearfix">
+         <div class="subtotal pull-right">SUBTOTAL: &nbsp; <strong><%= number_to_currency(@order.total_price) %></strong></div>
+         <%= link_to 'GO TO CART', order_item_path, class: 'btn btn-default' %>
+       </div>
+     </div>
+  <% else %>
+     <p>Order is empty&hellip; <%= link_to 'Get started shopping!', books_path %></p>
+  <% end %>
+  <div>&nbsp;</div>
+  <% unless (@orders.nil?) %>
+     <% previous_state = '' %>
+     <% @orders.each do |order| %>
+        <% if previous_state != order.state %>
+           <% if previous_state != '' %>
+              </tbody>
+              </table>
+           <% end %>
+           <h2><%= order.state.upcase %></h2>
+           <table class="table table-condensed no-borders">
+             <thead>
+             <tr>
+               <th width="40%">NUMBER</th>
+               <th width="30%">COMPLETED&nbsp;AT</th>
+               <th width="20%">TOTAL</th>
+               <th width="10%">&nbsp;</th>
+             </tr>
+             </thead>
+             <tbody>
+        <%- end %>
+        <tr>
+          <td><%= order.number %></td>
+          <td><%= date_format(order.completed_date) %></td>
+          <td><%= number_to_currency(order.total_price+order.delivery_price) %></td>
+          <td><%= link_to 'View', order_path(order) %></td>
+        </tr>
+        <% previous_state = order.state %>
+     <% end %>
+     </tbody>
+     </table>
+  <% end %>
+</div>

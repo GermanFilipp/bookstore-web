@@ -1,12 +1,14 @@
 FactoryGirl.define do
   factory :credit_card do
-    CVV { Faker::Number.number(4) }
-    number { Faker::Number.number(10) }
-    first_name { Faker::Name.first_name }
-    last_name { Faker::Name.last_name }
-    expiration_month { Faker::Number.number(2) }
-    expiration_year { Faker::Number.number(4) }
-    customer nil
+    number { Faker::Business.credit_card_number }
+    CVV { Faker::Number.number(3).to_s }
+    expiration_year do
+      first_year = Time.zone.now.year
+      last_year = first_year+7
+      rand(first_year..last_year)
+    end
+    expiration_month { Faker::Business.credit_card_expiry_date.month }
+    first_name {Faker::Name.name}
+    last_name {Faker::Name.name}
   end
-
 end
