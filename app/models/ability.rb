@@ -31,7 +31,7 @@ class Ability
 
 
     #customer ||= Customer.new
-if customer
+  if customer
     if customer.admin?
       can :access, :rails_admin       # only allow admin users to access Rails Admin
       can :dashboard
@@ -48,9 +48,10 @@ if customer
       can [:edit,:destroy,:address,:email, :password],Customer, customer:customer
       can [:show,:index,:update,:destroy], Order
     end
-else
-  can [:index,:show,:home], Book
-end
+  else
+    can [:index,:show,:home], Book
+    can :show, Category
+  end
 
 
   end
