@@ -52,7 +52,7 @@ gem 'owlcarousel-rails'
 gem 'figaro'
 gem 'simple_form'
 gem 'reform'
-
+gem 'virtus'
 gem 'cloudinary'
 gem 'rails_12factor'
 gem 'aasm', '~> 4.2.0'
@@ -78,13 +78,13 @@ group :development, :test do
   gem 'rspec-activemodel-mocks'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
-  gem 'capybara'
+
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
 
 group :test do
-
+  gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'faker'
   gem 'database_cleaner'

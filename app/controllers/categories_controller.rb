@@ -1,5 +1,5 @@
 class CategoriesController < ApplicationController
-  before_action :authenticate_customer!
+  #load_and_authorize_resource
 
 
   def show

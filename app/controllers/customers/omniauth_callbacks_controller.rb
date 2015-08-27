@@ -2,14 +2,12 @@ class Customers::OmniauthCallbacksController < Devise::OmniauthCallbacksControll
 
   def facebook
    @customer = Customer.from_omniauth(request.env['omniauth.auth'])
-#    if @customer.persisted?
+    if @customer.persisted?
         sign_in_and_redirect @customer, notice: "Signed in!"
-=begin
     else
         session['devise.customer_attributes'] = @customer.attributes
         redirect_to new_customer_registration_url
     end
-=end
   end
 
 

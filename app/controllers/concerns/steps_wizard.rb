@@ -1,8 +1,6 @@
 module StepsWizard
   extend ActiveSupport::Concern
 
-
-
   def show_address
     @billing_address ||= @order.billing_address|| current_customer.billing_address || Address.new
     @shipping_address ||= @order.shipping_address|| current_customer.shipping_address || Address.new
@@ -11,7 +9,7 @@ module StepsWizard
   def show_delivery
     if @order.billing_address.nil? || @order.shipping_address.nil?
       @notice = 'Your order address have not been set correctly'
-       return
+      return
     end
     @delivery_methods = DeliveryMethod.active
     delivery_method_id = params[:delivery_method_id] || @order.delivery_method_id
@@ -66,17 +64,19 @@ module StepsWizard
   end
 
   private
+
   def save_address(type)
-    if type == 'shipping' && params.has_key?(:use_billing_address)
-      return @order.update_attribute(:shipping_address_id, @order.billing_address_id)
-    elsif type == 'billing'
-      return @order.update_attribute(:billing_address_id, current_customer.billing_address_id)
-    elsif type == 'shipping'
-      return @order.update_attribute(:shipping_address_id, current_customer.shipping_address_id)
-    end
     unless current_customer.save_address(addr_params(type).merge(type: type))
       return false
     end
+    if params.has_key?(:use_billing_address)
+      return @order.update_attribute(:shipping_address_id, @order.billing_address_id)
+    end
+
+    type == 'billing' ? @order
+                            .update_attribute(:billing_address_id, current_customer.billing_address_id)
+                            : @order.update_attribute(:shipping_address_id, current_customer.shipping_address_id)
+
   end
 
   def delivery_params

@@ -16,11 +16,10 @@ RSpec.describe CategoriesController, type: :controller do
   describe 'GET #show' do
     before do
       get :show, {id: category.id}
-      Category.stub(:find).and_return category
     end
 
     it 'receives find and return category' do
-      expect(Category).to receive(:find).with(category.id)
+      expect(assigns(:category)).to eq category
     end
 
     it 'assigns @categories length' do
@@ -28,6 +27,9 @@ RSpec.describe CategoriesController, type: :controller do
       expect(assigns(:categories).length).to eq(1)
     end
 
+    it "assigns @books" do
+      expect(assigns(:books)).to eq category.books.page(1)
+    end
 
 
 

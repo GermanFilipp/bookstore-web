@@ -13,7 +13,7 @@
           <% if customer_signed_in? %>
              <li>
                <i class="glyphicon glyphicon-shopping-cart">
-                 <%= link_to_unless_current('CART', order_item_path) %>:
+                 <%= link_to_unless_current('CART', order_items_path) %>:
                  <%  if (current_customer_order.nil? || current_customer_order.total_items == 0) %>
                     <%= '(EMPTY)' %>
 	                 <% else %>

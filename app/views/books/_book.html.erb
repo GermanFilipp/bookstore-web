@@ -10,7 +10,7 @@
       <p class="date">Publication date: <%= @book.created_at.strftime("%d %B %Y")%></p>
       <p class="date"><h4>Description:</h4></br><%= @book.description%></p>
 
-      <%= form_tag(order_item_path, :method => "post") do %>
+      <%= form_tag(order_items_path,:method => 'post') do %>
 
         <%= number_field_tag 'orders[quantity]','1', in: 1..@book.quentity_books, class:'quantity-input'  %>
 

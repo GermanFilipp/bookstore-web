@@ -5,19 +5,22 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :customers, :controllers => { :omniauth_callbacks => "customers/omniauth_callbacks"}
   #root paths
-  root 'carousels#index'
+  root 'books#home'
   #routes app
-  resources :carousels, only: [:index]
   resources :categories, only: [:show]
   resources :order_steps, only: [:show, :update]
   resources :orders, only: [:index, :show]
 
   resources :books, only: [:index, :show] do
+    get 'home',on: :collection
     resources :ratings, only: [:create, :new]
   end
 
-  resource :order_item, only: [:create, :show,:update,:destroy] do
-    delete ':item_id', action: 'remove_item', as: 'item'
+  resources :order_items, only: [:index, :destroy, :create] do
+    collection do
+      delete 'destroy_all', action: 'destroy_all'
+      put    'update_all',  action: 'update'
+    end
   end
 
   resource :customer, only: [:edit,:destroy] do
@@ -25,7 +28,6 @@ Rails.application.routes.draw do
     put 'email',   action: 'email'
     put 'password',action: 'password'
   end
-
 
 
   # The priority is based upon order of creation: first created -> highest priority.

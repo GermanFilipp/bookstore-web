@@ -1,24 +1,23 @@
 class RatingsController < ApplicationController
+  load_and_authorize_resource
 
   def new
-    @book = Book.where(id: params[:book_id])
+    @book = Book.find_by_id params[:book_id]
     @rating = Rating.new
   end
 
   def create
-    @book = Book.where(id: params[:book_id])
-    @ratings = Rating.add_review(rating_params[:review],rating_params[:rating],
-                                 rating_params[:title],rating_params[:customer_id],
-                                 rating_params[:book_id])
-
-    redirect_to book_path(params[:book_id])
+      @rating.update_attributes(rating_params)
+      redirect_to book_path params[:book_id] , @notice =  'Review added'
   end
 
   private
 
   def rating_params
-    params.require(:ratings).permit(:review, :rating,
-                                   :title, :book_id, :customer_id )
+    params.require(:ratings)
+        .permit(:review, :rating, :title)
+        .merge(book_id: params[:book_id], customer_id:current_customer.id)
   end
+
 
 end

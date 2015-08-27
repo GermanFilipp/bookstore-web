@@ -23,9 +23,9 @@ RSpec.describe BooksController, type: :controller do
     end
 
     it 'assigns @categories' do
-      categories = create_list(:category, 10)
+      categories = create_list(:category, 2)
       expect(assigns(:categories)).to match_array(categories)
-      expect(assigns(:categories).length).to eq(10)
+      expect(assigns(:categories).length).to eq(2)
     end
 
     it "renders index template" do
@@ -52,5 +52,21 @@ RSpec.describe BooksController, type: :controller do
       expect(response).to render_template("show")
     end
   end
+
+  describe "GET #home" do
+    before do
+      get :home
+    end
+    FactoryGirl.create_list(:book,5, sold_count:5)
+
+    it 'must return five first books' do
+      expect(assigns(:books)).to match_array Book.bestsellers
+    end
+
+    it "renders home template" do
+      expect(response).to render_template('home')
+    end
+  end
+
 
 end

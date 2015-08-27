@@ -1,7 +1,6 @@
 class BooksController < ApplicationController
-=begin
-  before_action :authenticate_customer!
-=end
+  #load_and_authorize_resource
+
 
   def index
     @books = Book.page params[:page]
@@ -13,5 +12,8 @@ class BooksController < ApplicationController
     @ratings = Rating.get_rating(params[:id])
   end
 
+  def home
+    @books = Book.bestsellers
+  end
 
 end

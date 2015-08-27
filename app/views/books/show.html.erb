@@ -5,7 +5,7 @@
     <div class="thumbnail row">
      <ul class="nav nav-pills">
        <li><h4>Reviews</h4></li>
-       <li><%= link_to "Add Review for this book", new_book_rating_path(customer_id: current_customer.id, book_id: params[:id]) %></li>
+       <li><%= link_to "Add Review for this book", new_book_rating_path(book_id: params[:id]) %></li>
      </ul>
 
       <%@ratings.each  do |rating| %>

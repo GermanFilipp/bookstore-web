@@ -8,6 +8,16 @@ module UpdateCustomer
     address_params
   end
 
+  def set_errors_for(object, property)
+    @errors[property.to_sym] = Array.new unless @errors[property.to_sym]
+    errors = instance_variable_get("@#{object}").errors.full_messages.uniq
+    if errors.length == 0
+      entity = instance_variable_get("@#{property}") || instance_variable_get("@#{object}").send(property)
+      errors = entity.errors.full_messages.uniq if entity && entity.invalid?
+    end
+    @errors[property.to_sym] |= errors
+  end
+
 
 
 

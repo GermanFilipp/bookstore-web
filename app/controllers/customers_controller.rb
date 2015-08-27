@@ -1,7 +1,7 @@
 class CustomersController < ApplicationController
+  authorize_resource
   include UpdateCustomer
   before_action  :set_data
-
   def edit
     @billing_address  ||= @customer.billing_address  || Address.new
     @shipping_address ||= @customer.shipping_address || Address.new

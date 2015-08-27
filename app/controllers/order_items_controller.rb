@@ -1,20 +1,22 @@
 class OrderItemsController < ApplicationController
-
+  load_and_authorize_resource
   before_action :current_order
 
+=begin
   load_and_authorize_resource
-  def show
+=end
+  def index
     @order_items = @order.order_items
   end
 
-  def destroy
+  def destroy_all
     @order.order_items.destroy_all
-    redirect_to order_item_path
+    redirect_to order_items_path
   end
 
-  def remove_item
-    @order.order_items.find(params[:item_id]).destroy
-    redirect_to order_item_path
+  def destroy
+    @order.order_items.find(params[:id]).destroy
+    redirect_to order_items_path
   end
 
   def create
@@ -28,8 +30,17 @@ class OrderItemsController < ApplicationController
     params[:quantity].each do |item_id, quantity|
       @order.order_items.find_by_id(item_id).update(:quantity => quantity)
     end
-    redirect_to order_item_path
+    redirect_to order_items_path
   end
+
+  def update_all
+    params[:quantity].each do |item_id, quantity|
+      @order.order_items.find_by_id(item_id).update(:quantity => quantity)
+    end
+    redirect_to order_items_path
+  end
+
+
 
 
   def current_order

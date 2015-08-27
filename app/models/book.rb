@@ -15,4 +15,8 @@ class Book < ActiveRecord::Base
     where(category_id: id)
   end
 
+  def self.bestsellers
+    order('sold_count DESC').limit(5)
+  end
+
 end

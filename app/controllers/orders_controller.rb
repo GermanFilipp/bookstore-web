@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-
+  load_and_authorize_resource
   # GET /orders
   def index
     @order = current_customer_order

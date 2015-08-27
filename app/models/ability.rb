@@ -29,13 +29,29 @@ class Ability
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
 
-    customer ||= Customer.new
+
+    #customer ||= Customer.new
+if customer
     if customer.admin?
       can :access, :rails_admin       # only allow admin users to access Rails Admin
       can :dashboard
       can :manage, :all
-    elsif customer.id?
-      can [:show,:destroy,:remove_item,:create,:update,], OrderItem
+    else
+      can [:index,:destroy,:create,:update,:destroy_all], OrderItem
+      can [:create, :new], Rating
+      can [:index,:show,:home], Book
+      can :show, Category
+      can [:index,:show,:update], Order,customer:customer
+      can :manage, DeliveryMethod
+      can :manage, Address
+      can :manage, CreditCard
+      can [:edit,:destroy,:address,:email, :password],Customer, customer:customer
+      can [:show,:index,:update,:destroy], Order
     end
+else
+  can [:index,:show,:home], Book
+end
+
+
   end
 end

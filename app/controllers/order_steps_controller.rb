@@ -2,12 +2,13 @@ class OrderStepsController < ApplicationController
   include Wicked::Wizard
   include StepsWizard
   include UpdateCustomer
+  authorize_resource :order
   helper_method :step_index_for, :current_step_index, :wizard_path, :next_wizard_path
   steps :address, :delivery, :payment, :confirm, :complete
   before_action :setter
+
+
   def show
-
-
     send("show_#{step}")
     redirect_to previous_wizard_path, :notice => @notice and return unless @notice.nil?
     render_wizard
