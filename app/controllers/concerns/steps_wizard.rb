@@ -66,12 +66,15 @@ module StepsWizard
   private
 
   def save_address(type)
+
+    if type == 'shipping' && params.has_key?(:use_billing_address)
+      return @order.update_attribute(:shipping_address_id, @order.billing_address_id)
+    end
+
     unless current_customer.save_address(addr_params(type).merge(type: type))
       return false
     end
-    if params.has_key?(:use_billing_address)
-      return @order.update_attribute(:shipping_address_id, @order.billing_address_id)
-    end
+
 
     type == 'billing' ? @order
                             .update_attribute(:billing_address_id, current_customer.billing_address_id)

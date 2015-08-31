@@ -18,8 +18,20 @@ feature 'Customer writes rating' do
 
   scenario 'customer add rating via "add rating" form' do
 
+      fill_in 'ratings[title]' , with: "NiceBOOK"
+      fill_in 'ratings[review]', with: "perfect"
+      fill_in 'ratings[rating]',  with: 9
+      click_button 'Submit'
+
+
+    expect(page).to have_content "NiceBOOK"
+    expect(page).to have_content 'perfect'
+    expect(page).to have_content customer.first_name
   end
 
+=begin
+  should add fail add-rating
+=end
 
 
 end
