@@ -14,7 +14,7 @@ class Customer < ActiveRecord::Base
   belongs_to :billing_address, class_name: "Address"
   belongs_to :shipping_address, class_name: "Address"
 
-  accepts_nested_attributes_for :addresses
+
   validates :email,presence: true
   validates :email, uniqueness: { case_sensitive: false }
 

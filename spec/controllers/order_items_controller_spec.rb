@@ -11,8 +11,9 @@ RSpec.describe OrderItemsController, type: :controller do
   end
 
   let!(:order) { FactoryGirl.create(:order, customer: customer) }
-  let(:book) { FactoryGirl.create(:book) }
+  let!(:book) { FactoryGirl.create(:book, id: 1) }
   let(:order_item) { FactoryGirl.create(:order_item, order: order, book: book, quantity: 1) }
+
 
   describe 'GET #index' do
     before do
@@ -35,25 +36,38 @@ RSpec.describe OrderItemsController, type: :controller do
   end
 
   describe 'POST #create' do
+    before { request.env['HTTP_REFERER'] = root_path }
+    it 'add book to order_items' do
+      book2 = FactoryGirl.create(:book, id: 2)
+      post :create, "orders"=>{"quantity"=>"2", "book_id"=>"2"}
+      order.reload
+      expect(order).to
+    end
 
   end
-  #???????
-=begin
+
+
   describe 'POST #update_all' do
     it 'change quantity' do
-    post :update_all, "quantity"=>{"#{order_item.id}"=>"3"}
-    expect(order_item.quantity).to eq(3)
+      post :update, "quantity"=>{"#{order_item.id}"=>"3"}
+      order_item.reload
+      expect(order_item.quantity).to eq(3)
     end
   end
-=end
+
 
   describe 'DELETE #destroy' do
-
+    it 'delete one current order item from order' do
+      delete :destroy, {id: order_item.id}
+      order.reload
+      expect(order.order_items).not_to include order_item
+    end
   end
 
   describe 'DELETE #destroy_all' do
     it 'delete all order items from current order' do
       delete :destroy_all
+      order.reload
       expect(order.order_items).to be_blank
     end
 

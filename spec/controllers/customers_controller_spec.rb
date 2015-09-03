@@ -37,29 +37,30 @@ RSpec.describe CustomersController, type: :controller do
       expect(customer.email).to eq 'hello@world.com'
     end
   end
+
 =begin
   describe 'PUT #password' do
-
     it 'changes customer password' do
-     put :password, customer: FactoryGirl.attributes_for(:customer, password: '12345678')
-     customer.reload
-
-    expect(customer.password).to eq(generate_key('12345678', key_size = 64))
+      pass = customer.password
+      customer = {current_password:'12345678', password: '45666678897849849', password_confirmation:'45666678897849849'}
+      put :password, customer
+      customer.reload
+      expect(customer.password).not_to eq pass
     end
-
   end
 =end
-=begin
+
+
   describe 'PUT #address'do
     it 'changes customer address' do
-    put :password, customer:customer
-    FactoryGirl.attributes_for(:address, zipcode: '123456')
+    put :password, customer:FactoryGirl.attributes_for(:address, zipcode: '123456')
+
     address.reload
 
     expect(address.zipcode).to eq '123456'
     end
   end
-=end
+
 
   describe 'DELETE #destroy'do
     it 'deletes the customer' do

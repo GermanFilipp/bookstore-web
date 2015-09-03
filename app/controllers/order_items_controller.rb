@@ -1,10 +1,7 @@
 class OrderItemsController < ApplicationController
-  load_and_authorize_resource
+  authorize_resource
   before_action :current_order
 
-=begin
-  load_and_authorize_resource
-=end
   def index
     @order_items = @order.order_items
   end
@@ -22,8 +19,9 @@ class OrderItemsController < ApplicationController
   def create
     book = Book.find_by_id(order_params[:book_id])
     quantity = order_params[:quantity]
+    p order_params
     @order.add_book(book,quantity.to_i)
-    redirect_to :back ,  notice: 'Book was successfully added to cart.'
+    redirect_to :back ,  notice: 'Book was successfully added to cart.'+"#{order_params}"
   end
 
   def update
