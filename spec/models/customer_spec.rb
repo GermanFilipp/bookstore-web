@@ -100,9 +100,6 @@ RSpec.describe Customer, type: :model do
     expect(customer).to have_many(:orders)
   end
 
-  it 'has many credit_cards' do
-    expect(customer).to have_many(:credit_cards)
-  end
 
   it 'has many addresses' do
     expect(customer).to have_many(:addresses)
@@ -163,6 +160,7 @@ RSpec.describe Customer, type: :model do
     end
   end
 
+=begin
   describe '#last_order' do
     it 'return last order' do
                FactoryGirl.create(:already_completed, customer: customer)
@@ -170,6 +168,7 @@ RSpec.describe Customer, type: :model do
       expect(customer.last_orders.id).to eq order1.id
     end
   end
+=end
 end
 
 

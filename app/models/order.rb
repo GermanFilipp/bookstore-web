@@ -1,16 +1,17 @@
 class Order < ActiveRecord::Base
-   include AASM
+   include AASM, AddressSaver
    belongs_to :customer
    belongs_to :credit_card
-   belongs_to :shipping_address, class_name: "Address"
-   belongs_to :billing_address, class_name: "Address"
+   belongs_to :shipping_address, class_name: "Address",  autosave: true
+   belongs_to :billing_address, class_name: "Address", autosave: true
    belongs_to :delivery_method
+   belongs_to :coupon
    has_many   :order_items
 
    STATE_IN_PROGRESS = 'in progress'
    scope :already_completed, -> {where.not(state: STATE_IN_PROGRESS)}
-  validates   :state, presence: true
- # validates  :state, presence: true, inclusion: {in: %W{in\ progress completed shipped}}
+   validates   :state, presence: true
+   validates_associated :billing_address, :shipping_address, :credit_card, :delivery_method
    enum state: {
             in_progress: "in progress",
             in_queue: "in queue",
@@ -66,7 +67,13 @@ class Order < ActiveRecord::Base
 
   def total_price
     items_price = self.order_items.map {|item| item.quantity*item.price}
-    self.total_price = items_price.inject(&:+) || 0
+    price = items_price.inject(&:+) || 0
+    unless self.coupon.blank?
+      self.total_price =  price - self.coupon.price
+    else
+      self.total_price =  price
+    end
+
   end
 
   def set_completed_date
@@ -75,6 +82,7 @@ class Order < ActiveRecord::Base
 
   def save_credit_card(credit_card_params)
     credit_card = self.credit_card
+
     if credit_card.nil?
       credit_card = CreditCard.find_or_create_by(credit_card_params)
       credit_card.valid? && self.update(:credit_card => credit_card)
@@ -93,6 +101,5 @@ class Order < ActiveRecord::Base
       Book.where(id: order_item.book_id).update_all("sold_count = sold_count + #{order_item.quantity}")
     end
   end
-
 
 end

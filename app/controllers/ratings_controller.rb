@@ -6,10 +6,11 @@ class RatingsController < ApplicationController
   end
 
   def create
+    @book = Book.find_by_id params[:book_id]
      if @rating.update_attributes(rating_params)
-      redirect_to book_path  params[:book_id] , flash[:success] =  'Review added'
+      redirect_to book_path  params[:book_id] , flash[:success] =  'Review was successfully added'
      else
-      redirect_to :back, flash[:danger] => 'Something wrong'
+       render action: 'new'
      end
   end
 

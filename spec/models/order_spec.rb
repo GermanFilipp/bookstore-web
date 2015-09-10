@@ -43,6 +43,10 @@ RSpec.describe Order, type: :model do
     expect(order).to belong_to(:credit_card)
   end
 
+  it 'blongs to coupon' do
+    expect(order).to belong_to(:coupon)
+  end
+
   it 'has many order items' do
     expect(order).to have_many(:order_items)
   end
@@ -79,47 +83,7 @@ RSpec.describe Order, type: :model do
     expect(order.total_items).to eq 7
   end
 
-  context '#save_credit_card' do
-    before(:all) do
-      @customer = FactoryGirl.create(:customer)
-    end
-    let(:credit_card) {FactoryGirl.create(:credit_card, customer: @customer)}
-    let(:credit_card_params) {FactoryGirl.attributes_for(:credit_card, customer: @customer)}
 
-    context 'when credit card was not set previously' do
-      let(:order) {FactoryGirl.create(:order, customer: @customer)}
-
-      it 'creates new credit card and set it to order' do
-        expect(order.save_credit_card(credit_card_params)).to eq true
-        expect(order.credit_card.id).to be > 0
-      end
-
-      it 'finds existing credit card and set it to order' do
-        credit_card_params = {
-            :number => credit_card.number,
-            :expiration_year => credit_card.expiration_year,
-            :expiration_month => credit_card.expiration_month,
-            :CVV => credit_card.CVV,
-            :customer => @customer
-        }
-        expect(order.save_credit_card(credit_card_params)).to eq true
-        expect(Order.find(order.id).credit_card_id).to eq credit_card.id
-      end
-    end
-    it 'returns false if credit card is invalid' do
-      order = FactoryGirl.create(:order, customer: @customer)
-      rand_123_number = [1, 2, 3].sample
-      credit_card_params[:number] = '' if (rand_123_number&1 > 0)
-      credit_card_params[:code]   = '' if (rand_123_number&2 > 0)
-      expect(order.save_credit_card(credit_card_params)).to eq false
-    end
-
-    it 'updates data of the credit card previously saved for the order' do
-      order = FactoryGirl.create(:order, customer: @customer, credit_card: credit_card)
-      expect(order.save_credit_card(credit_card_params)).to eq true
-      expect(Order.find(order.id).credit_card_id).to eq credit_card.id
-    end
-  end
 
 
 end

@@ -16,6 +16,15 @@ RSpec.describe OrderItemsController, type: :controller do
 
 
   describe 'GET #index' do
+
+    context 'cancan does not allow :index' do
+      before do
+        ability.cannot :show, OrderItem
+        get :index
+      end
+      it { expect(response).to redirect_to(new_customer_session_path) }
+    end
+
     before do
       get :index
       customer.reload
@@ -36,6 +45,15 @@ RSpec.describe OrderItemsController, type: :controller do
   end
 
   describe 'POST #create' do
+
+    context 'cancan does not allow :create' do
+      before do
+        ability.cannot :create, OrderItem
+        post :create, "orders"=>{"quantity"=>"2", "book_id"=>"2"}
+      end
+      it { expect(response).to redirect_to(new_customer_session_path) }
+    end
+
     before { request.env['HTTP_REFERER'] = root_path }
     it 'add book to order_items' do
       book2 = FactoryGirl.create(:book, id: 2)
@@ -48,6 +66,16 @@ RSpec.describe OrderItemsController, type: :controller do
 
 
   describe 'POST #update_all' do
+
+    context 'cancan does not allow :update' do
+      before do
+        ability.cannot :update, OrderItem
+        post :update, "orders"=>{"quantity"=>"2", "book_id"=>"2"}
+      end
+      it { expect(response).to redirect_to(new_customer_session_path) }
+    end
+
+
     it 'change quantity' do
       post :update, "quantity"=>{"#{order_item.id}"=>"3"}
       order_item.reload
@@ -57,6 +85,15 @@ RSpec.describe OrderItemsController, type: :controller do
 
 
   describe 'DELETE #destroy' do
+
+    context 'cancan does not allow :destroy' do
+      before do
+        ability.cannot :destroy, OrderItem
+        delete :destroy, {id: order_item.id}
+      end
+      it { expect(response).to redirect_to(new_customer_session_path) }
+    end
+
     it 'delete one current order item from order' do
       delete :destroy, {id: order_item.id}
       order.reload
@@ -65,6 +102,15 @@ RSpec.describe OrderItemsController, type: :controller do
   end
 
   describe 'DELETE #destroy_all' do
+
+    context 'cancan does not allow :destroy_all' do
+      before do
+        ability.cannot :destroy_all, OrderItem
+        delete :destroy_all
+      end
+      it { expect(response).to redirect_to(new_customer_session_path) }
+    end
+
     it 'delete all order items from current order' do
       delete :destroy_all
       order.reload

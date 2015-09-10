@@ -17,6 +17,14 @@ RSpec.describe BooksController, type: :controller do
   describe 'GET #index' do
     before { get :index }
 
+    context 'cancan does not allow :index' do
+      before do
+        ability.cannot :index, Book
+        get :index
+      end
+      it { expect(response).to redirect_to(new_customer_session_path) }
+    end
+
     it 'assigns @books' do
       books = create_list(:book,2)
       expect(assigns(:books)).to match_array(books)
@@ -40,6 +48,14 @@ RSpec.describe BooksController, type: :controller do
       get :show, {id: book.id}
     end
 
+    context 'cancan does not allow :show' do
+      before do
+        ability.cannot :show, Book
+        get :show, {id: book.id}
+      end
+      it { expect(response).to redirect_to(new_customer_session_path) }
+    end
+
     it "assigns @book to book" do
       expect(assigns(:book)).to eq(book)
     end
@@ -56,6 +72,14 @@ RSpec.describe BooksController, type: :controller do
   describe "GET #home" do
     before do
       get :home
+    end
+
+    context 'cancan does not allow :show' do
+      before do
+        ability.cannot :home, Book
+        get :home
+      end
+      it { expect(response).to redirect_to(new_customer_session_path) }
     end
     FactoryGirl.create_list(:book,5, sold_count:5)
 

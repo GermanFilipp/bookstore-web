@@ -1,3 +1,4 @@
+=begin
 module StepsWizard
   extend ActiveSupport::Concern
 
@@ -91,4 +92,4 @@ module StepsWizard
         .permit(:number, :expiration_month, :expiration_year, :CVV)
         .merge(customer_id: current_customer.id)
   end
-end
+end=end

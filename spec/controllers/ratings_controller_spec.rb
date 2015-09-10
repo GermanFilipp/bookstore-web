@@ -11,8 +11,16 @@ RSpec.describe RatingsController, type: :controller do
     sign_in customer
   end
 
-
+##Some troubles - must remake this tests
   describe 'GET #new' do
+
+    context 'cancan does not allow :new' do
+      before do
+        ability.cannot :new, Rating
+        get :new
+      end
+      it { expect(response).to redirect_to(new_customer_session_path) }
+    end
     before do
       get :new, book_id: book.id
     end
@@ -35,6 +43,17 @@ RSpec.describe RatingsController, type: :controller do
 
 
   describe 'POST #create' do
+
+    context 'cancan does not allow :index' do
+      before do
+        ratings = {title: "dk",review: "odkc", rating: '10'}
+
+        ability.cannot :create, Rating
+        post :create,ratings, book_id: book.id, customer_id: customer.id
+      end
+      it { expect(response).to redirect_to(new_customer_session_path) }
+    end
+
     ratings = {title: "dk",review: "odkc", rating: '10'}
     after { post :create, ratings, book_id: book.id, customer_id: customer.id }
 

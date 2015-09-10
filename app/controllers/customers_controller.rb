@@ -2,6 +2,7 @@ class CustomersController < ApplicationController
   authorize_resource
   include UpdateCustomer
   before_action  :set_data
+
   def edit
     @billing_address  ||= @customer.billing_address  || Address.new
     @shipping_address ||= @customer.shipping_address || Address.new
@@ -10,7 +11,8 @@ class CustomersController < ApplicationController
 
   def email
     if @customer.update(customer_params)
-      redirect_to edit_customer_path, :notice => 'Your e-mail was updated.'
+      flash[:success] = 'Your e-mail was updated.'
+      redirect_to edit_customer_path
     else
       edit
     end
@@ -18,7 +20,8 @@ class CustomersController < ApplicationController
 
   def password
     if @customer.update_with_password(customer_params)
-      redirect_to edit_customer_path, :notice => 'Your password was updated.'
+      flash[:success] = 'Your password was updated.'
+      redirect_to edit_customer_path
     else
       edit
     end
@@ -27,10 +30,9 @@ class CustomersController < ApplicationController
   def address
     type = params[:type] || 'billing'
     if @customer.save_address(addr_params(type).merge(type: type))
-      redirect_to edit_customer_path, :notice => 'Your '+type+' address was updated.'
+      flash[:success] = 'Your '+type+' address was updated.'
+      redirect_to edit_customer_path
     else
-      instance_variable_set("@#{type}_address", Address.new(addr_params(type)))
-
       edit
     end
   end
@@ -38,9 +40,11 @@ class CustomersController < ApplicationController
   def destroy
     if params.has_key?(:remove_account_confirm)
       @customer.destroy
+      flash[:success] = 'POTRACHENO'
       redirect_to root_path
     else
-      redirect_to edit_customer_path, :notice => 'You should confirm your action!'
+      flash[:success] = 'You should confirm your action!'
+      redirect_to edit_customer_path
     end
   end
 

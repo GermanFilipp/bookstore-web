@@ -3,12 +3,11 @@ class BooksController < ApplicationController
 
 
   def index
-    @books = Book.page params[:page]
+    @books = @books.page params[:page]
     @categories = Category.all
   end
 
   def show
-    @book = Book.find(params[:id])
     @ratings = Rating.get_rating(params[:id])
   end
 

@@ -1,10 +1,18 @@
 class CreditCard < ActiveRecord::Base
-  belongs_to :customer
+  #belongs_to :customer
   has_many   :orders
 
+
   validates  :number, :CVV, :expiration_month, :expiration_year,  presence: true
-  validates :number, format: { with: /[0-9]{4}\-[0-9]{4}\-[0-9]{4}\-[0-9]{4}/ }, presence: true
-  validates :CVV, format: { with: /[0-9]{3}/ }, presence: true
+=begin
+  validates :legacy_code, format: { with: /\A[a-zA-Z]+\z/,
+                                    message: "only allows letters" }
+=end
+  validates :number, format: { with: /[0-9]{4}\-[0-9]{4}\-[0-9]{4}\-[0-9]{4}/,
+                   message:  "format should be like '1234-1234-1234-1234'"}, presence: true
+  validates :CVV, format: { with: /[0-9]{3}/,
+                message:  "should be like '123' "}, presence: true
+
 
   def display_number
     '****-****-****-'+number.to_s.slice(-4..-1)

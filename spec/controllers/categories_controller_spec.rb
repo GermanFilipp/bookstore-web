@@ -14,6 +14,16 @@ RSpec.describe CategoriesController, type: :controller do
   end
 
   describe 'GET #show' do
+
+
+    context 'cancan does not allow :show' do
+      before do
+        ability.cannot :show, Rating
+        get :show, {id: category.id}
+      end
+      it { expect(response).to redirect_to(new_customer_session_path) }
+    end
+
     before do
       get :show, {id: category.id}
     end

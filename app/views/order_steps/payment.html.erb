@@ -4,27 +4,28 @@
    <div class="row">
      <div class="col-md-4">
        <h2>CARD DETAILS</h2>
-
+       <%= render partial: 'shared/errors', locals:{ entity: [@order_steps_form.credit_card]}  %>
+       <%= hidden_field_tag 'credit_card[customer_id]', current_customer.id%>
        <div class="form-group">
-         <%= text_field_tag('credit_card[number]', @credit_card.number, :class => 'form-control', :placeholder => 'Card Number') %>
+         <%= text_field_tag('credit_card[number]', @order_steps_form.credit_card.number, :class => 'form-control', :placeholder => 'Card Number') %>
        </div>
        <div class="form-group">
          Expiration date:
          <div class="month-year">
            <div class="input-group">
              <div class="input-group-addon">Month</div>
-             <%= select_tag('credit_card[expiration_month]', options_for_select(@credit_card.month_list, @credit_card.expiration_month), :class => 'form-control month')%>
+             <%= select_tag('credit_card[expiration_month]', options_for_select(@order_steps_form.credit_card.month_list, @order_steps_form.credit_card.expiration_month), :class => 'form-control month')%>
            </div>
            <div class="input-group">
              <div class="input-group-addon">Year</div>
-             <%= select_tag('credit_card[expiration_year]', options_for_select(@credit_card.year_list, @credit_card.expiration_year), :class => 'form-control year')%>
+             <%= select_tag('credit_card[expiration_year]', options_for_select(@order_steps_form.credit_card.year_list, @order_steps_form.credit_card.expiration_year), :class => 'form-control year')%>
            </div>
          </div>
        </div>
        <div class="form-group">
          <div class="input-group card-code">
            <div class="input-group-addon">Card code:</div>
-           <%= password_field_tag('credit_card[CVV]', @credit_card.CVV, :class => 'form-control') %>
+           <%= password_field_tag('credit_card[CVV]', @order_steps_form.credit_card.CVV, :class => 'form-control') %>
          </div>
        </div>
      </div>
@@ -36,8 +37,8 @@
          <h2>ORDER SUMMARY</h2>
          <div class="summary-price">
            <%= number_to_currency(@order.total_price) %><br />
-           <%= number_to_currency(@order.delivery_method.price) %><br />
-           <%= number_to_currency(@order.total_price+@order.delivery_method.price) %>
+           <%= number_to_currency(@order.delivery_price) %><br />
+           <%= number_to_currency(@order.total_price+@order.delivery_price) %>
          </div>
          <div class="summary-title">
            <nobr>ITEMS TOTAL:</nobr><br />

@@ -50,16 +50,27 @@ RSpec.describe CustomersController, type: :controller do
   end
 =end
 
+=begin
+"type"=>"billing",
+ "billing_address"=>{"first_name"=>"jkjsdkj",
+ "last_name"=>"fkajsakfj",
+ "address"=>"jkvdjavk",
+ "city"=>"kdvndkv",
+ "country_id"=>"1",
+ "zipcode"=>"cdjvkd",
+ "phone"=>"kjcsnv"},
+ "commit"=>"SAVE"}
+=end
 
   describe 'PUT #address'do
     it 'changes customer address' do
-    put :password, customer:FactoryGirl.attributes_for(:address, zipcode: '123456')
+      put :address, type: "billing", billing_address: {first_name: "jkjsdkj", last_name: "fkajsakfj", address: "jkvdjavk", city: "kdvndkv", country_id: "1", zipcode: "cdjvkd", phone: "kjcsnv"}
 
-    address.reload
-
-    expect(address.zipcode).to eq '123456'
+      address.reload
+      expect(response).to render_template("edit")
     end
   end
+
 
 
   describe 'DELETE #destroy'do

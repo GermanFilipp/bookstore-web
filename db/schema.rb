@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150827130744) do
+ActiveRecord::Schema.define(version: 20150909162409) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "address"
@@ -67,6 +67,13 @@ ActiveRecord::Schema.define(version: 20150827130744) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "coupons", force: :cascade do |t|
+    t.string   "number"
+    t.decimal  "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "credit_cards", force: :cascade do |t|
     t.string   "number"
     t.string   "CVV"
@@ -76,10 +83,7 @@ ActiveRecord::Schema.define(version: 20150827130744) do
     t.string   "last_name"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
-    t.integer  "customer_id"
   end
-
-  add_index "credit_cards", ["customer_id"], name: "index_credit_cards_on_customer_id"
 
   create_table "customers", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
@@ -133,20 +137,18 @@ ActiveRecord::Schema.define(version: 20150827130744) do
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
     t.integer  "credit_card_id"
-    t.integer  "billing_adress_id"
-    t.integer  "shipping_adress_id"
     t.integer  "customer_id"
     t.integer  "billing_address_id"
     t.integer  "shipping_address_id"
     t.integer  "delivery_method_id"
     t.decimal  "delivery_price"
     t.string   "number"
+    t.integer  "coupon_id"
   end
 
-  add_index "orders", ["billing_adress_id"], name: "index_orders_on_billing_adress_id"
+  add_index "orders", ["coupon_id"], name: "index_orders_on_coupon_id"
   add_index "orders", ["credit_card_id"], name: "index_orders_on_credit_card_id"
   add_index "orders", ["customer_id"], name: "index_orders_on_customer_id"
-  add_index "orders", ["shipping_adress_id"], name: "index_orders_on_shipping_adress_id"
 
   create_table "ratings", force: :cascade do |t|
     t.string   "review"

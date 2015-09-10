@@ -39,17 +39,7 @@ RSpec.describe Rating, type: :model do
     end
 
   end
- ####REFACTOR
-  describe '#add_review' do
-     it 'should add review for current book' do
-       book = FactoryGirl.create(:book)
-       customer = FactoryGirl.create(:customer)
-       rating_params = FactoryGirl.attributes_for(:rating,book:book,customer: customer)
-       expect(Rating.add_review(rating_params.title, rating_params.rating,
-                                rating_params.review,rating_params.book_id,
-                                rating_params.customer.id)).to eq true
-     end
-  end
+
 
 
 
