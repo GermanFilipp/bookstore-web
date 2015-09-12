@@ -21,7 +21,7 @@ class CustomersController < ApplicationController
   def password
     if @customer.update_with_password(customer_params)
       flash[:success] = 'Your password was updated.'
-      redirect_to edit_customer_path
+      redirect_to new_customer_session_path
     else
       edit
     end
@@ -38,6 +38,7 @@ class CustomersController < ApplicationController
   end
 
   def destroy
+
     if params.has_key?(:remove_account_confirm)
       @customer.destroy
       flash[:success] = 'POTRACHENO'
@@ -46,6 +47,7 @@ class CustomersController < ApplicationController
       flash[:success] = 'You should confirm your action!'
       redirect_to edit_customer_path
     end
+
   end
 
 
