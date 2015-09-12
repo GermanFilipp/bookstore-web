@@ -45,7 +45,7 @@ class Ability
       can :manage, DeliveryMethod
       can :manage, Address
       can :manage, CreditCard
-      #can [:edit,:destroy,:address,:email, :password],Customer, customer:customer
+      can [:edit,:destroy,:address,:email, :password],Customer, customer:customer
       can [:show,:index,:update,:destroy], Order ,customer:customer
     end
   else

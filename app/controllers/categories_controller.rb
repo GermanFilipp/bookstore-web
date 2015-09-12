@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
 
   def show
     @categories = Category.all
-    @books = Book.by_category(params[:id]).page params[:page]
+    @books = @category.books.page params[:page]
   end
 
 end

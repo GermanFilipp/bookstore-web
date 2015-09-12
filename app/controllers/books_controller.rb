@@ -8,11 +8,11 @@ class BooksController < ApplicationController
   end
 
   def show
-    @ratings = Rating.get_rating(params[:id])
+    @ratings = @book.ratings
   end
 
   def home
-    @books = Book.bestsellers
+      @bestsellers = Book.bestsellers
   end
 
 end

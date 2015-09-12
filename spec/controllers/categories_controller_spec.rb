@@ -15,10 +15,9 @@ RSpec.describe CategoriesController, type: :controller do
 
   describe 'GET #show' do
 
-
     context 'cancan does not allow :show' do
       before do
-        ability.cannot :show, Rating
+        ability.cannot :show, Category
         get :show, {id: category.id}
       end
       it { expect(response).to redirect_to(new_customer_session_path) }
@@ -28,20 +27,17 @@ RSpec.describe CategoriesController, type: :controller do
       get :show, {id: category.id}
     end
 
-    it 'receives find and return category' do
+    it 'return category' do
       expect(assigns(:category)).to eq category
     end
 
     it 'assigns @categories length' do
-
       expect(assigns(:categories).length).to eq(1)
     end
 
     it "assigns @books" do
       expect(assigns(:books)).to eq category.books.page(1)
     end
-
-
 
     it "render show template" do
       expect(response).to render_template("show")

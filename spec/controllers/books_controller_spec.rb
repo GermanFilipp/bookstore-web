@@ -30,6 +30,7 @@ RSpec.describe BooksController, type: :controller do
       expect(assigns(:books)).to match_array(books)
     end
 
+
     it 'assigns @categories' do
       categories = create_list(:category, 2)
       expect(assigns(:categories)).to match_array(categories)
@@ -81,7 +82,7 @@ RSpec.describe BooksController, type: :controller do
       end
       it { expect(response).to redirect_to(new_customer_session_path) }
     end
-    FactoryGirl.create_list(:book,5, sold_count:5)
+    FactoryGirl.create_list(:book,10, sold_count:5)
 
     it 'must return five first books' do
       expect(assigns(:books)).to match_array Book.bestsellers
