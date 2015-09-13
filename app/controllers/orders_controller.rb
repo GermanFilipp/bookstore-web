@@ -1,10 +1,11 @@
 class OrdersController < ApplicationController
-  load_and_authorize_resource
+  authorize_resource
   # GET /orders
   def index
+    @orders = current_customer.all_orders
     @order = current_customer_order
     @order_items = @order.books
-    @orders = current_customer.all_orders
+
   end
 
   # GET /orders/1

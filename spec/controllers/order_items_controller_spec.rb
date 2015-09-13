@@ -19,7 +19,7 @@ RSpec.describe OrderItemsController, type: :controller do
 
     context 'cancan does not allow :index' do
       before do
-        ability.cannot :show, OrderItem
+        ability.cannot :index, OrderItem
         get :index
       end
       it { expect(response).to redirect_to(new_customer_session_path) }
@@ -49,7 +49,7 @@ RSpec.describe OrderItemsController, type: :controller do
     context 'cancan does not allow :create' do
       before do
         ability.cannot :create, OrderItem
-        post :create, "orders"=>{"quantity"=>"2", "book_id"=>"2"}
+        post :create, orders:{quantity: 2, book_id: 2}
       end
       it { expect(response).to redirect_to(new_customer_session_path) }
     end
@@ -57,9 +57,11 @@ RSpec.describe OrderItemsController, type: :controller do
     before { request.env['HTTP_REFERER'] = root_path }
     it 'add book to order_items' do
       book2 = FactoryGirl.create(:book, id: 2)
-      post :create, "orders"=>{"quantity"=>"2", "book_id"=>"2"}
+      book3 = FactoryGirl.create(:book, id: 3)
+      post :create, orders: {quantity: 2 , book_id: 2}
+      post :create, orders:{quantity: 2, book_id: 3}
       order.reload
-      expect(order).to
+      expect(OrderItem.count).to eq 2
     end
 
   end

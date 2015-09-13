@@ -8,11 +8,12 @@ class OrderStepsController < ApplicationController
 
 
   def show
-     jump_to @order_steps_form.check_last_step_errors if step.eql?(:confirm)
+    jump_to @order_steps_form.check_last_step_errors if step.eql?(:confirm)
     render_wizard
   end
 
   def update
+    authorize! :update, @order
     @order_steps_form.update(step, order_params)
     render_wizard @order_steps_form
   end

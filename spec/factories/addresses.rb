@@ -10,7 +10,7 @@ FactoryGirl.define do
     phone { Faker::PhoneNumber.phone_number }
     country { FactoryGirl.create(:country) }
 
-    customer { FactoryGirl.create(:customer) }
+
 
 
 

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   #routes app
   resources :categories, only: [:show]
   resources :order_steps, only: [:show, :update]
-  resources :orders, only: [:index, :show]
+  resources :orders, only: [:index, :show, :update]
 
   resources :books, only: [:index, :show] do
     get 'home',on: :collection

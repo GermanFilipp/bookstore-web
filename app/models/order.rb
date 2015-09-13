@@ -10,6 +10,13 @@ class Order < ActiveRecord::Base
 
    STATE_IN_PROGRESS = 'in progress'
    scope :already_completed, -> {where.not(state: STATE_IN_PROGRESS)}
+
+   scope :in_progress, ->{where(state: 'in progress')}
+   scope :in_queue, ->{where(state: 'in queue')}
+   scope :in_delivery, -> {where(state: 'in delivery')}
+   scope :delivered, -> {where(state: 'delivered')}
+   scope :canceled, -> {where(state: 'canceled')}
+
    validates   :state, presence: true
    validates_associated :billing_address, :shipping_address, :credit_card, :delivery_method
    enum state: {
@@ -101,5 +108,8 @@ class Order < ActiveRecord::Base
       Book.where(id: order_item.book_id).update_all("sold_count = sold_count + #{order_item.quantity}")
     end
   end
+
+
+
 
 end
