@@ -172,7 +172,7 @@ input {
 
 #owl-carousel .item {
   display: block;
-  width: auto;
+  width: 50%;
   height: auto;
 
 }
@@ -187,15 +187,6 @@ input {
 .owl-prev {left: -7%;}
 .owl-next {right: -7%;}
 
-header {
-  padding: 20px 0 10px 0;
-}
-.logo {
-  font-size: 24px;
-}
-header .row div:not(.logo) {
-  margin-top: 8px;
-}
 footer {
   margin-top: 40px;
   padding-top:10px;
