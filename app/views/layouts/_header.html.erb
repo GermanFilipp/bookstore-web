@@ -1,50 +1,46 @@
-<header >
-  <nav class="navbar navbar-fixed-top navbar-default" role="navigation" >
-    <div class="container-fluid">
-
-      <div class="navbar-header">
-        <a class="navbar-brand logo" >The Bookstore</a>
-      </div>
-
-      <nav>
-        <ul class="nav navbar-nav">
-          <li ><%= link_to "HOME",    root_path %></li>
-          <li ><%= link_to "SHOP",    books_path %></li>
-          <% if customer_signed_in? %>
-             <li>
-               <i class="glyphicon glyphicon-shopping-cart">
-                 <%= link_to_unless_current('CART', order_items_path) %>:
-                 <%  if (current_customer_order.nil? || current_customer_order.total_items == 0) %>
-                    <%= '(EMPTY)' %>
-	                 <% else %>
-                    <%= "(#{current_customer_order.total_items}) #{number_to_currency(current_customer_order.total_price)}" %>
-	                 <%end%>
-               </i>
-             </li>
-          <% end %>
-
-        </ul>
-      </nav>
 
 
-
-      <nav>
-        <ul class="nav navbar-nav navbar-right">
-          <% if customer_signed_in? %>
-	          <% if current_customer.admin?%>
-                <li><%= link_to "Admin Dashboard", rails_admin_path %></li>
-	          <% end %>
-          <li><%= link_to "Settings",    edit_customer_path %></li>
-          <li><%= link_to "Orders",    orders_path %></li>
-          <li><%= link_to "Sign out", destroy_customer_session_path, :method => :delete %></li>
-	          <%else%>
-             <li><%= link_to "Sign in",    new_customer_session_path %></li>
-             <li><%= link_to "Sign up",    new_customer_registration_path %></li>
-          <%end%>
-        </ul>
-      </nav>
-
+<div class="navbar navbar-fixed-top navbar-default" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#b-menu-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">The Bookstore</a>
     </div>
-  </nav>
-</header>
+    <div class="collapse navbar-collapse" id="b-menu-1">
+      <ul class="nav navbar-nav navbar-right">
+        <li ><%= link_to "HOME",    root_path %></li>
+        <li ><%= link_to "SHOP",    books_path %></li>
+        <% if customer_signed_in? %>
+           <li>
+             <i class="glyphicon glyphicon-shopping-cart">
+               <%= link_to_unless_current('CART', order_items_path) %>:
+               <%  if (current_customer_order.nil? || current_customer_order.total_items == 0) %>
+                  <%= '(EMPTY)' %>
+               <% else %>
+                  <%= "(#{current_customer_order.total_items}) #{number_to_currency(current_customer_order.total_price)}" %>
+               <%end%>
+             </i>
+           </li>
+        <% end %>
+        <% if customer_signed_in? %>
+           <% if current_customer.admin?%>
+              <li><%= link_to "Admin Dashboard", rails_admin_path %></li>
+           <% end %>
+           <li><%= link_to "Settings",    edit_customer_path %></li>
+           <li><%= link_to "Orders",    orders_path %></li>
+           <li><%= link_to "Sign out", destroy_customer_session_path, :method => :delete %></li>
+        <%else%>
+           <li><%= link_to "Sign in",    new_customer_session_path %></li>
+           <li><%= link_to "Sign up",    new_customer_registration_path %></li>
+        <%end%>
 
+
+      </ul>
+    </div> <!-- /.nav-collapse -->
+  </div> <!-- /.container -->
+</div> <!-- /.navbar -->

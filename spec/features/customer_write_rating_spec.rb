@@ -29,6 +29,17 @@ feature 'Customer writes rating' do
     expect(page).to have_content customer.first_name
   end
 
+  scenario 'customer add invalid params for rating via "add rating" form' do
+
+    fill_in 'ratings[title]' , with: "NiceBOOK"
+    fill_in 'ratings[review]', with: "perfect"
+    fill_in 'ratings[rating]',  with: ''
+    click_button 'Submit'
+
+    expect(page).to have_content 'Review was not added! Please fill all fields!'
+  end
+
+
 =begin
   should add fail add-rating
 =end

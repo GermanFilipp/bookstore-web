@@ -11,9 +11,6 @@ RSpec.describe Address, type: :model do
     expect(address).to validate_presence_of(:zipcode)
   end
 
-  it 'has a zip code only in correct format' do
-    expect(FactoryGirl.build(:address, zipcode: '123!5')).not_to be_valid
-  end
 
   it 'has a city' do
     expect(address).to validate_presence_of(:city)

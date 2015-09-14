@@ -186,3 +186,243 @@ input {
 }
 .owl-prev {left: -7%;}
 .owl-next {right: -7%;}
+
+header {
+  padding: 20px 0 10px 0;
+}
+.logo {
+  font-size: 24px;
+}
+header .row div:not(.logo) {
+  margin-top: 8px;
+}
+footer {
+  margin-top: 40px;
+  padding-top:10px;
+  border-top: 1px solid #ccc;
+}
+.price {
+  font-size: 18px;
+}
+input.quantity {
+  width: 60px !important;
+  text-align: right;
+}
+h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+.breadcrumbs {
+  margin-top: 31px;
+}
+.breadcrumbs + h1  {
+  margin-top: 0;
+}
+.shop-list div {
+  text-align: center;
+  margin-bottom: 14px;
+}
+.shop-list div h5 {
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+.category-title {
+  margin-top: 31px;
+  margin-bottom: 15px;
+}
+.category-list {
+  width:154px;
+}
+.category-list div {
+  text-align: left;
+}
+.book img {
+  margin-right: 30px;
+  margin-bottom: 20px;
+}
+.book .price {
+  font-size: 20px;
+  padding-top: 8px;
+  margin-bottom: 20px;
+}
+.review-list h2 {
+  margin-top: 14px;
+  font-size: 24px;
+  margin-right: 30px;
+}
+.review-list .review {
+  margin-top: 5px;
+  margin-bottom: 40px;
+}
+.review .rating {
+  margin-right: 34px;
+}
+.review .date {
+  color: #808080;
+  margin-left: 20px
+}
+.review .author {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+.rating-cancel {
+  display: none !important;
+}
+.review .form-group {
+  margin-top: 12px;
+}
+.review .form-group label {
+  font-weight: normal;
+}
+.cart {
+  margin-top:20px;
+}
+.order table th:first-child,
+.cart table th:first-child {
+  width: 100%;
+  text-align: left;
+}
+.order table th,
+.cart table th {
+  text-align: center;
+}
+.order table td img,
+.cart table td img {
+  margin-top: 6px;
+}
+.order table td div,
+.cart table td div {
+  font-weight: bold;
+  font-size: 120%;
+}
+.order table td.price,
+.cart table td.price {
+  text-align: right;
+  font-size: 120%;
+  font-weight: bold;
+  padding-top: 28px;
+}
+.order table td.quantity {
+  text-align: right;
+  font-size: 120%;
+  padding-top: 28px;
+  padding-right: 10px;
+}
+.cart table td input {
+  margin-top: 18px;
+}
+.cart table td.remove a {
+  color: #f00;
+}
+.order table,
+.cart table {
+  border-bottom: 2px dotted #000;
+}
+.cart .subtotal {
+  font-size: 120%;
+  margin: 0 25px 20px 0;
+}
+.order .subtotal {
+  font-size: 120%;
+  padding: 0 5px 20px 0;
+}
+.order .total {
+  border-top: 2px dotted #000;
+}
+.order-status {
+  color: #606060;
+  margin-top: 30px;
+}
+.order-back {
+  position: absolute;
+}
+.orders h2, .settings h2 {
+  border-bottom: 2px solid #000;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+.orders table.no-borders {
+  width: 50% !important;
+}
+.orders table.no-borders td,
+.orders table.no-borders th {
+  border: 0 !important;
+}
+
+.settings form {
+  margin-top: 20px;
+}
+.settings .form-control,
+.checkout .form-control {
+  width: 250px !important;
+}
+.settings select.form-control,
+.checkout select.form-control {
+  width: 175px !important;
+}
+.settings div:first-child {
+  margin-bottom: 20px;
+}
+.settings .checkbox {
+  margin-left: 20px;
+}
+
+.checkout .stages {
+  line-height: 28px;
+  float: right;
+  font-size: 18px;
+  margin-top: 25px;
+}
+.checkout .stages span {
+  border-bottom: 1px solid #000;
+}
+.checkout h2 {
+  font-size: 18px;
+  /*text-transform: uppercase;*/
+  border-bottom: 10px solid #fff;
+}
+.checkout .summary-price {
+  margin-left: 8px;
+  float: right;
+}
+.checkout .summary-title {
+  text-align: right;
+}
+.checkout button {
+  margin-top: 10px;
+}
+.checkout select.month {
+  width: 48px !important;
+  padding-left: 2px !important;
+  padding-right: 2px !important;
+}
+.checkout select.year {
+  width: 80px !important;
+}
+.checkout .month-year .input-group:first-child {
+  width: 116px;
+  float: left;
+}
+.checkout .card-code {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.checkout .card-code .form-control {
+  width: 154px !important;
+}
+.checkout div.edit {
+  float: right;
+  margin-top: 20px;
+}
+.checkout .details {
+  margin-top: -10px;
+  margin-bottom: 30px;
+}
+
+.alert_message {
+  display: none !important;
+}
+a.checkout {
+  margin-top: 10px;
+}

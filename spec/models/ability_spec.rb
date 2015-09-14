@@ -131,7 +131,7 @@ RSpec.describe Ability, type: :model do
     context 'for order' do
       it {expect(ability).not_to be_able_to(:create, Order)}
       it {expect(ability).to be_able_to(:update, Order)}
-      it {expect(ability).to be_able_to(:destroy, Order)}
+      it {expect(ability).not_to be_able_to(:destroy, Order)}
       it {expect(ability).to be_able_to(:index, Order)}
       it {expect(ability).to be_able_to(:show, Order)}
     end
