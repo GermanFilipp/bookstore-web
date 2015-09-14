@@ -15,8 +15,9 @@
       <ul class="nav navbar-nav navbar-right">
         <li ><%= link_to "HOME",    root_path %></li>
         <li ><%= link_to "SHOP",    books_path %></li>
+        <li style="padding-top: 15px;">
         <% if customer_signed_in? %>
-           <li>
+
              <i class="glyphicon glyphicon-shopping-cart">
                <%= link_to_unless_current('CART', order_items_path) %>:
                <%  if (current_customer_order.nil? || current_customer_order.total_items == 0) %>
@@ -25,8 +26,10 @@
                   <%= "(#{current_customer_order.total_items}) #{number_to_currency(current_customer_order.total_price)}" %>
                <%end%>
              </i>
-           </li>
+
         <% end %>
+        </li>
+
         <% if customer_signed_in? %>
            <% if current_customer.admin?%>
               <li><%= link_to "Admin Dashboard", rails_admin_path %></li>

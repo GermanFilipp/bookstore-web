@@ -1,27 +1,40 @@
+<row>
 <div class="container">
 
-      <div class="full_image col-md-3">
-        <%= image_tag @book.image_url%>
-      </div>
+  <div class="full_image col-md-3">
+    <%= image_tag @book.image_url%>
+  </div>
+<div class="col-md-4 ">
 
-      <p class="title"><h3><%= @book.title%></h3></p>
-      <p class="price"><h3><%=number_to_currency @book.price%></h3></p>
-      <p class="date">Quentity Books: <%= @book.quentity_books%></p>
-      <p class="date">Publication date: <%= @book.created_at.strftime("%d %B %Y")%></p>
-      <p class="date"><h4>Description:</h4></br><%= @book.description%></p>
+  <p class="title"><h3><%= @book.title%></h3></p>
+  <p class="price"><h3><%=number_to_currency @book.price%></h3></p>
+  <p class="date">Quentity Books: <%= @book.quentity_books%></p>
+  <p class="date">Publication date: <%= @book.created_at.strftime("%d %B %Y")%></p>
+  <p class="date"><h4>Description:</h4></br><%= @book.description%></p>
+</div>
 
-      <%= form_tag(order_items_path,:method => 'post') do %>
+<div class="col-md-2">
 
-        <%= number_field_tag 'orders[quantity]','1', in: 1..@book.quentity_books, class:'quantity-input'  %>
+  <%= form_tag(order_items_path,:method => 'post') do %>
 
-         <%= text_field_tag 'orders[book_id]' ,params[:id], style: 'visibility:hidden;'  %>
+     <%= number_field_tag 'orders[quantity]','1', in: 1..@book.quentity_books, class:'quantity-input'  %>
 
-         <%= submit_tag "Add to Cart", class: "btn btn-large btn-primary" %>
+     <%= text_field_tag 'orders[book_id]' ,params[:id], style: 'visibility:hidden;'  %>
 
-      <% end %>
+     <%= submit_tag "Add to Cart", class: "btn btn-large btn-primary" %>
+
+  <% end %>
+
+</div>
+
+
+
+
+
       </div>
     </div>
 
   </div>
 
 </div>
+</row>

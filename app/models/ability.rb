@@ -38,12 +38,12 @@ class Ability
       can :manage, :all
     else
       can [:index,:destroy,:create,:update,:destroy_all], OrderItem
-      can [:create, :new],Rating
+      can [:create, :new],Rating,customer:customer
       can [:index,:show,:home],Book
       can :show,Category
-      can :manage,DeliveryMethod
-      can :manage,Address
-      can :manage,CreditCard
+      can :manage,DeliveryMethod,customer:customer
+      can :manage,Address,customer:customer
+      can :manage,CreditCard,customer:customer
       can [:edit,:destroy,:address,:email, :password],Customer, customer:customer
       can [:show,:index,:update],Order, customer:customer
 

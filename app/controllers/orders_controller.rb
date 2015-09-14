@@ -1,8 +1,8 @@
 class OrdersController < ApplicationController
-  authorize_resource
+  load_and_authorize_resource
   # GET /orders
   def index
-    @orders = current_customer.all_orders
+    @orders = @orders.all_completed_orders
     @order = current_customer_order
     @order_items = @order.books
 
@@ -10,7 +10,6 @@ class OrdersController < ApplicationController
 
   # GET /orders/1
   def show
-    @order = current_customer.orders.find(params[:id])
     @order_items = @order.books
     @order_total = @order.total_price+@order.delivery_price
   end

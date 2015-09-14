@@ -1,5 +1,6 @@
 class OrderItemsController < ApplicationController
-  authorize_resource
+  authorize_resource :except => :destroy
+  load_and_authorize_resource :only => :destroy
   before_action :current_order
 
   def index
@@ -13,9 +14,12 @@ class OrderItemsController < ApplicationController
   end
 
   def destroy
-    @order.order_items.find(params[:id]).destroy
+
+    @order_item.destroy
     flash[:success] = 'One item from order was successfully deleted'
     redirect_to order_items_path
+
+
   end
 
   def create
