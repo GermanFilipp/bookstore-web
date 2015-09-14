@@ -12,7 +12,7 @@
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db/test.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:sqlite:$PROJECT_DIR$/db/development.sqlite3_test</jdbc-url>
       <libraries />
     </data-source>
     <data-source source="LOCAL" name="Rails bookstore: production" uuid="64b20be6-3acc-4219-92ff-0dc06953b599">
