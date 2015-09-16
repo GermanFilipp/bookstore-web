@@ -35,8 +35,5 @@
 </div>
      <div>
        <%= button_tag('SAVE AND CONTINUE', :class => 'btn btn-default', :type => 'submit', :name => 'address') %>
-       <% unless @order.billing_address.nil? || @order.shipping_address.nil? %>
-          <%= link_to('CONTINUE', next_wizard_path, {:class => 'btn btn-default checkout'}) %>
-       <% end %>
      </div>
   <% end %>

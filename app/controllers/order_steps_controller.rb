@@ -1,13 +1,13 @@
 class OrderStepsController < ApplicationController
   include Wicked::Wizard
   include UpdateCustomer
-  authorize_resource :order
   helper_method :step_index_for, :current_step_index, :wizard_path, :next_wizard_path
   steps :address, :delivery, :payment, :confirm, :complete
   before_action :setter
 
 
   def show
+    authorize! :show, @order
     jump_to @order_steps_form.check_last_step_errors if step.eql?(:confirm)
     render_wizard
   end

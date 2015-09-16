@@ -1,63 +1,35 @@
 class CustomersController < ApplicationController
   authorize_resource
-  include UpdateCustomer
-  before_action  :set_data
+  include CustomerSettings
 
-  def edit
+
+  def show
     @billing_address  ||= @customer.billing_address  || Address.new
     @shipping_address ||= @customer.shipping_address || Address.new
-    render :edit
+    render :show
   end
 
-  def email
-    if @customer.update(customer_params)
-      flash[:success] = 'Your e-mail was updated.'
-      redirect_to edit_customer_path
+  def update
+    if customer_params[:shipping_address]
+      save_shipping_address
+    elsif customer_params[:billing_address]
+      save_billing_address
+    elsif customer_params[:email]
+      save_email
+    elsif customer_params[:password]
+      save_password
     else
-      edit
-    end
-  end
-
-  def password
-    if @customer.update_with_password(customer_params)
-      flash[:success] = 'Your password was updated.'
-      redirect_to new_customer_session_path
-    else
-      edit
-    end
-  end
-
-  def address
-    type = params[:type] || 'billing'
-    if @customer.save_address(addr_params(type).merge(type: type))
-      flash[:success] = 'Your '+type+' address was updated.'
-      redirect_to edit_customer_path
-    else
-      edit
+      render :show
     end
   end
 
   def destroy
-
     if params.has_key?(:remove_account_confirm)
       @customer.destroy
-      flash[:success] = 'POTRACHENO'
       redirect_to root_path
     else
-      flash[:success] = 'You should confirm your action!'
-      redirect_to edit_customer_path
+      flash[:danger] = 'You should confirm your action!'
+      redirect_to :action => "show"
     end
-
-  end
-
-
-  private
-  def set_data
-    @customer = current_customer
-
-  end
-
-  def customer_params
-    params.require(:customer).permit(:email, :current_password, :password, :password_confirmation)
   end
 end

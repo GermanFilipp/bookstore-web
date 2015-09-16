@@ -23,11 +23,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resource :customer, only: [:edit,:destroy] do
-    put 'address', action: 'address'
-    put 'email',   action: 'email'
-    put 'password',action: 'password'
-  end
+  resource :customer, only: [:show,:update,:destroy]
 
 
   # The priority is based upon order of creation: first created -> highest priority.

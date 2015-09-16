@@ -14,12 +14,9 @@ class OrderItemsController < ApplicationController
   end
 
   def destroy
-
     @order_item.destroy
     flash[:success] = 'One item from order was successfully deleted'
     redirect_to order_items_path
-
-
   end
 
   def create
@@ -35,7 +32,7 @@ class OrderItemsController < ApplicationController
       @order.order_items.find_by_id(item_id).update(:quantity => quantity)
     end
     add_coupon unless params[:coupon].blank?
-    flash[:success] = 'Order was successfully updated'
+    flash[:success] = 'Order was successfully updated' if flash[:danger].nil?
     redirect_to order_items_path
   end
 
@@ -45,13 +42,13 @@ class OrderItemsController < ApplicationController
     @coupon = Coupon.find_by(number: params[:coupon])
     if @coupon
       if @order.coupon
-        flash[:error] = 'You already use coupon code'
+        flash[:danger] = 'You already use coupon code'
       else
         @order.update(coupon: @coupon)
         flash[:success] = 'Coupon code has been accepted'
       end
     else
-      flash[:error] = 'Coupon not found'
+      flash[:danger] = 'Coupon not found'
     end
   end
 

@@ -21,18 +21,18 @@ RSpec.describe CustomersController, type: :controller do
     end
 
     it 'redirect to HTTP_REFERER' do
-      expect(response).to redirect_to(edit_customer_path)
+      expect(response).to redirect_to(customer_path)
     end
 
   end
 
-  describe ' GET #edit' do
-    before {get :edit}
+  describe ' GET #show' do
+    before {get :show}
 
     context 'cancan does not allow :edit' do
       before do
-        ability.cannot :edit, Customer
-        get :edit
+        ability.cannot :show, Customer
+        get :show
       end
       it {expect(response).to redirect_to(new_customer_session_path) }
     end
@@ -65,96 +65,30 @@ RSpec.describe CustomersController, type: :controller do
     end
 
     it 'render the :edit view' do
-      expect(response).to render_template("edit")
+      expect(response).to render_template("show")
     end
 
   end
 
-  describe 'PUT #email' do
-    before { request.env['HTTP_REFERER'] = edit_customer_path }
-
-    context 'cancan does not allow :email' do
+  describe 'PUT #update' do
+    before { request.env['HTTP_REFERER'] = customer_path }
+    context 'cancan does not allow :update' do
       before do
-        ability.cannot :email, Customer
-        get :email, customer: FactoryGirl.attributes_for(:customer,email: 'hello@world.com')
+        ability.cannot :update, Customer
+        get :update, customer: FactoryGirl.attributes_for(:customer,email: 'hello@world.com')
       end
       it {expect(response).to redirect_to(new_customer_session_path) }
     end
 
     it_behaves_like 'success flash and redirect' do
-      let(:req) { put :email, customer: FactoryGirl.attributes_for(:customer,email: 'hello@world.com') }
-    end
-
-    context 'customer enter new valid email' do
-      it 'changes customer email' do
-        put :email,customer: FactoryGirl.attributes_for(:customer,email: 'hello@world.com')
-        customer.reload
-        expect(customer.email).to eq 'hello@world.com'
-      end
-
-    end
-
-    context 'customer enter not valid or blank email' do
-      it 'not change customer email' do
-        email = customer.email
-        put :email,customer: FactoryGirl.attributes_for(:customer,email: nil)
-        customer.reload
-        expect(customer.email).to eq email
-      end
-
-      it 'show some error' do
-        put :email,customer: FactoryGirl.attributes_for(:customer,email: nil)
-        expect(customer.errors.full_messages).not_to be_nil
-      end
-    end
-  end
-
-  describe 'PUT #password' do
-
-    context 'cancan does not allow :password' do
-      before do
-        ability.cannot :password, Customer
-        get :password, customer: FactoryGirl.attributes_for(:customer,password: '1212424545')
-      end
-      it {expect(response).to redirect_to(new_customer_session_path) }
-    end
-
-    before { request.env['HTTP_REFERER'] = edit_customer_path }
-
-    context 'customer enter valid current_password, password, password_confirmation' do
-      it 'change customer password' do
-        put :password,  customer: {current_password:'12345678', password: '45666678897849849', password_confirmation:'45666678897849849'}
-        expect(response).to redirect_to(new_customer_session_path)
-      end
-    end
-
-    context 'customer enter invalid password' do
-      it 'change customer password' do
-        put :password,  customer: {current_password:'1234567jiefid8', password: '45666678897849849', password_confirmation:'45666678897849849'}
-        expect(response).to render_template('edit')
-      end
-    end
-
-  end
-
-
-
-  describe 'PUT #address'do
-    before { request.env['HTTP_REFERER'] = edit_customer_path }
-
-    context 'cancan does not allow :address' do
-      before do
-        ability.cannot :address, Customer
-        get :address, billing_address: FactoryGirl.attributes_for(:address)
-      end
-      it {expect(response).to redirect_to(new_customer_session_path) }
+      let(:req) { put :update, email: FactoryGirl.attributes_for(:customer,email: 'hello@world.com') }
     end
 
     context 'customer enter valid address params for ' do
       it '@billing_address' do
         customer.billing_address = FactoryGirl.create :address
         billing_address_params = FactoryGirl.attributes_for(:address)
-        put :address, type: "billing", billing_address: billing_address_params
+        put :update, billing_address: billing_address_params
         address.reload
         expect(customer.billing_address) == billing_address_params
       end
@@ -162,7 +96,7 @@ RSpec.describe CustomersController, type: :controller do
       it '@shipping_address' do
         customer.shipping_address = FactoryGirl.create :address
         shipping_address_params = FactoryGirl.attributes_for(:address)
-        put :address, type: "shipping", shipping_address: shipping_address_params
+        put :update, shipping_address: shipping_address_params
         address.reload
         expect(customer.shipping_address) == shipping_address_params
       end
@@ -170,18 +104,54 @@ RSpec.describe CustomersController, type: :controller do
 
     context 'customer enter invalid address params for' do
       it '@billing_address' do
-        put :address, type: "billing", billing_address: FactoryGirl.attributes_for(:address, zipcode: nil)
-        expect(response).to render_template('edit')
+        put :update, type: "billing", billing_address: FactoryGirl.attributes_for(:address, zipcode: nil)
+        expect(response).to render_template('show')
       end
 
       it '@shipping_address' do
-        put :address, type: "shipping", shipping_address: FactoryGirl.attributes_for(:address, zipcode: nil)
-        expect(response).to render_template('edit')
+        put :update, type: "shipping", shipping_address: FactoryGirl.attributes_for(:address, zipcode: nil)
+        expect(response).to render_template('show')
+      end
+    end
+
+
+    context 'customer enter new valid email' do
+      it 'changes customer email' do
+        put :update,email: FactoryGirl.attributes_for(:customer,email: 'hello@world.com')
+        customer.reload
+        expect(customer.email).to eq 'hello@world.com'
       end
 
     end
-  end
 
+    context 'customer enter invalid or blank email' do
+      it 'not change customer email' do
+        email = customer.email
+        put :update,email: FactoryGirl.attributes_for(:customer,email: nil)
+        customer.reload
+        expect(customer.email).to eq email
+      end
+
+      it 'show some error' do
+        put :update,email: FactoryGirl.attributes_for(:customer,email: nil)
+        expect(customer.errors.full_messages).not_to be_nil
+      end
+    end
+
+    context 'customer enter valid current_password, password, password_confirmation' do
+      it 'change customer password' do
+        put :update,  password: {current_password:'12345678', password: '45666678897849849', password_confirmation:'45666678897849849'}
+        expect(response).to redirect_to(new_customer_session_path)
+      end
+    end
+
+    context 'customer enter invalid password' do
+      it 'change customer password' do
+        put :update,  password: {current_password:'1234567jiefid8', password: '45666678897849849', password_confirmation:'45666678897849849'}
+        expect(response).to render_template('show')
+      end
+    end
+  end
 
 
   describe 'DELETE #destroy'do
@@ -205,16 +175,16 @@ RSpec.describe CustomersController, type: :controller do
      end
 
     context 'customer delete account without confirm' do
-      it 'deletes the customer' do
+      it 'not deletes the customer' do
         expect{delete :destroy}.to change{Customer.count}.by(0)
       end
 
-      it 'redirect to root path' do
+      it 'not redirect to root path' do
         delete :destroy
-        expect(response).to redirect_to(edit_customer_path)
+        expect(response).to redirect_to(customer_path)
       end
     end
 
-
   end
+
 end

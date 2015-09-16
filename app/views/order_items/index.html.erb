@@ -22,7 +22,7 @@
                <td class="price"><%= number_to_currency(item.price) %></td>
                <td><%= number_field_tag('quantity['+item.id.to_s+']', item.quantity, {:min => 1, :max => 20, :class => 'form-control quantity'}) %></td>
                <td class="price"><%= number_to_currency(item.price*item.quantity) %></td>
-               <td><%= item.id %></td>
+
                <td class="price remove"><%= link_to('&times;'.html_safe, url_for(action: :destroy, id: item.id), method: :delete, id: :delete) %></td>
              </tr>
           <% end %>

@@ -12,7 +12,7 @@
              <div class="radio">
                <label>
                  <%= hidden_field_tag("delivery[delivery_price]", delivery.price) %>
-                 <%= radio_button_tag('delivery[delivery_method_id]', delivery.id) %>
+                 <%= radio_button_tag('delivery[delivery_method_id]', delivery.id, !!( delivery.id == @order.delivery_method_id || delivery.id == 1)) %>
                  <%= delivery.name %> + <%= number_to_currency(delivery.price) %>
                </label>
              </div>

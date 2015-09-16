@@ -18,15 +18,6 @@ class OrderStepsForm
     DeliveryMethod.active
   end
 
-  def select_delivery_method(params)
-    delivery_method_id = params[:delivery_method_id] || @order.delivery_method_id
-    unless delivery_method_id
-      @delivery_method =  delivery_methods.first
-    else
-      @delivery_method = delivery_methods.select{|delivery_method| delivery_method.id == delivery_method_id }.first
-    end
-  end
-
   def credit_card
     @order.credit_card ||= CreditCard.new
   end
