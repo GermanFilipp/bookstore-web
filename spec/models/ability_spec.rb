@@ -107,16 +107,30 @@ RSpec.describe Ability, type: :model do
     end
 
     context 'for  delivery method' do
-      it {expect(ability).to be_able_to(:manage, DeliveryMethod)}
+      #it {expect(ability).to be_able_to(:read, DeliveryMethod)}
+      it {expect(ability).to be_able_to(:show, DeliveryMethod)}
+      it {expect(ability).to be_able_to(:index, DeliveryMethod)}
+      it {expect(ability).not_to be_able_to(:create, DeliveryMethod)}
+      it {expect(ability).not_to be_able_to(:update, DeliveryMethod)}
+      it {expect(ability).not_to be_able_to(:destroy, DeliveryMethod)}
     end
 
     context 'for address' do
-      it {expect(ability).to be_able_to(:manage, Address)}
+      it {expect(ability).to be_able_to(:create, Address)}
+      it {expect(ability).to be_able_to(:update, Address)}
+      it {expect(ability).not_to be_able_to(:destroy, Address)}
+      it {expect(ability).to be_able_to(:show, Address)}
+      it {expect(ability).to be_able_to(:index, Address)}
     end
 
 
     context 'for credit card' do
-      it {expect(ability).to be_able_to(:manage, CreditCard)}
+      #it {expect(ability).to be_able_to(:manage, CreditCard)}
+      it {expect(ability).to be_able_to(:create, CreditCard)}
+      it {expect(ability).to be_able_to(:update, CreditCard)}
+      it {expect(ability).not_to be_able_to(:destroy, CreditCard)}
+      it {expect(ability).to be_able_to(:show, CreditCard)}
+      it {expect(ability).to be_able_to(:index, CreditCard)}
     end
 
     context 'for order item' do

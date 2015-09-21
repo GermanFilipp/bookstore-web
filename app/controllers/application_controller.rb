@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_customer_order, :countries, :date_format
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to new_customer_session_path, :alert => exception.message
+    redirect_to '/', :alert => exception.message
   end
 
 

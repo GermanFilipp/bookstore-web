@@ -41,10 +41,10 @@ class Ability
       can [:create, :new],Rating,customer:customer
       can [:index,:show,:home],Book
       can :show,Category
-      can :manage,DeliveryMethod,customer:customer
-      can :manage,Address,customer:customer
-      can :manage,CreditCard,customer:customer
-      can [:edit,:destroy,:address,:email, :password,:show,:update],Customer, customer:customer
+      can :read,DeliveryMethod,customer:customer
+      can [:read,:create,:update],Address,customer:customer
+      can [:read,:create,:update],CreditCard,customer:customer
+      can [:destroy,:show,:update],Customer, customer:customer
       can [:show,:index,:update],Order, customer:customer
 
     end

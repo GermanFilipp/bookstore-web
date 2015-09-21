@@ -1,34 +1,70 @@
 class AddressForm
   include ActiveModel::Model
+  include Virtus
 
 
-  attr_reader :order
-
-  def initialize(order)
-    @order = order
+=begin
+  def initialize
+    customer = Customer.find_by_id(customer_id)
+    @address = customer.shipping_address.find_or_create_by()
   end
+=end
 
-  def billing_address
-    @order.billing_address ||= @order.customer.billing_address || Address.new
-  end
+
+  #shipping_address: [:first_name, :last_name, :address, :city, :country_id, :zipcode, :phone],
+  attr_reader :address
+
+
+  attribute :first_name, String
+  attribute :last_name,  String
+  attribute :address,    String
+  attribute :city,       String
+  attribute :country_id, Integer
+  attribute :zipcode,    String
+  attribute :phone,      String
+  attribute :customer_id,Integer
+
+  validates :first_name, presence: true
+  validates :last_name,  presence: true
+  validates :address,    presence: true
+  validates :city,       presence: true
+  validates :country_id, presence: true
+  validates :zipcode,    presence: true
+  validates :phone,      presence: true
+  validates :customer_id,presence: true
 
   def shipping_address
-    @order.shipping_address ||= @order.customer.shipping_address || Address.new
+    customer = Customer.find_by_id(customer_id)
+    customer.shipping_address || Address.new
   end
 
-  def update(params)
-    params[:shipping_address] = params[:billing_address] if use_billing_address?(params)
-    @order.save_address(params[:billing_address].merge(type: 'billing'))
-    @order.save_address(params[:shipping_address].merge(type: 'shipping'))
-
+=begin
+  def save_shipping_address
+    @object.shipping_address.assign_attributes(first_name: first_name, last_name: last_name,
+                                              address:address,city: city,
+                                              country_id: country_id, zipcode: zipcode,
+                                              phone: phone)
   end
+=end
 
-  def use_billing_address?(params)
-    params[:shipping][:check].eql? '1'
+  def persisted?
+    false
   end
 
   def save
-    @order.save
+    if valid?
+      persist!
+      true
+    else
+      false
+    end
   end
+
+  def persist!
+
+    shipping_address.assign_attributes(shipping_address: shipping_address)
+    shipping_address.save!
+  end
+
 
 end

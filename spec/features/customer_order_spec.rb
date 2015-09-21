@@ -11,62 +11,61 @@ feature 'fill order step by step' do
     login_as customer
   end
 
-  scenario 'customer view address step' do
-    visit order_step_path(:address)
-    expect(page).to have_content 'BILLING ADDRESS'
-    expect(page).to have_content 'SHIPPING ADDRESS'
-    expect(page).to have_content 'ORDERS SUMMARY'
-    expect(page).to have_content 'SAVE AND CONTINUE'
-    expect(page).to have_content number_to_currency order.total_price
-
-  end
-
+    scenario 'customer view address step' do
+      visit order_step_path(:address)
+      fill_address
+      click_button 'SAVE AND CONTINUE'
+      expect(current_path).to eq(order_step_path(:delivery))
+    end
 
     scenario 'customer view delivery step' do
       visit order_step_path(:delivery)
-      expect(page).to have_content delivery.name
-      expect(page).to have_content  number_to_currency delivery.price
-      expect(page).to have_content 'DELIVERY METHOD'
+      choose delivery.name
+      click_button 'SAVE AND CONTINUE'
+      expect(current_path).to eq(order_step_path(:payment))
+
     end
 
     scenario 'customer view credit_card step' do
+      order.update(billing_address: FactoryGirl.create(:address),
+                   shipping_address: FactoryGirl.create(:address),
+                   delivery_method: FactoryGirl.create(:delivery_method))
       visit order_step_path(:payment)
-      expect(page).to have_content 'Month'
-      expect(page).to have_content 'Year'
+      fill_credit_card
+      click_button 'SAVE AND CONTINUE'
+      expect(current_path).to eq(order_step_path(:confirm))
     end
+
+
 
 
 
   scenario 'customer view confirm step' do
-    visit order_step_path(:address)
-    fill_address
-    click_on 'SAVE AND CONTINUE'
-    expect(page).to have_content delivery.name
-    choose("#{delivery.name}")
-    click_on 'SAVE AND CONTINUE'
-    fill_credit_card
-    click_on 'SAVE AND CONTINUE'
-    expect(page).to have_content country.name
-    expect(page).to have_content 'Shipping Address'
-    expect(page).to have_content 'Billing Address'
-    expect(page).to have_content 'Payment information'
-    expect(page).to have_content 'BOOK'
+    fill_all_fields
+    visit order_step_path(:confirm)
+    expect(page).to have_content order.billing_address.address
+    expect(page).to have_content order.shipping_address.address
+    expect(page).to have_content order.delivery_method.name
+    expect(page).to have_content order.credit_card.expiration_year
+    expect(page).to have_content order.credit_card.number.to_s.slice(-4..-1)
   end
 
   scenario 'customer view complete step' do
-    visit order_step_path(:address)
-    fill_address
-    click_on 'SAVE AND CONTINUE'
-    choose("#{delivery.name}")
-    click_on 'SAVE AND CONTINUE'
-    fill_credit_card
-    click_on 'SAVE AND CONTINUE'
-    click_on 'PLACE ORDER'
-    expect(page).to have_content country.name
-    expect(page).to have_content 'Shipping Address'
-    expect(page).to have_content 'Billing Address'
-    expect(page).to have_content 'Payment information'
-    expect(page).to have_content 'BOOK'
-    expect(page).to have_content "#{order.number}"
+    fill_all_fields
+    order.checkout!
+    visit order_step_path(:complete)
+    expect(page).to have_content order.billing_address.address
+    expect(page).to have_content order.shipping_address.address
+    expect(page).to have_content order.delivery_method.name
+    expect(page).to have_content order.credit_card.expiration_year
+    expect(page).to have_content order.credit_card.number.to_s.slice(-4..-1)
+  end
+
+
+  def fill_all_fields
+    order.update(billing_address: FactoryGirl.create(:address),
+                 shipping_address: FactoryGirl.create(:address),
+                 delivery_method: create(:delivery_method),
+                 credit_card: FactoryGirl.create(:credit_card))
   end
 end

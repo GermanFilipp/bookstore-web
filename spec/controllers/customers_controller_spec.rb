@@ -141,7 +141,7 @@ RSpec.describe CustomersController, type: :controller do
     context 'customer enter valid current_password, password, password_confirmation' do
       it 'change customer password' do
         put :update,  password: {current_password:'12345678', password: '45666678897849849', password_confirmation:'45666678897849849'}
-        expect(response).to redirect_to(new_customer_session_path)
+        expect(response).to have_http_status(302)
       end
     end
 

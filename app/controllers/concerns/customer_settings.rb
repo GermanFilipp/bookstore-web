@@ -1,5 +1,6 @@
 module CustomerSettings
   extend ActiveSupport::Concern
+=begin
 
   included do
     before_action  :set_data
@@ -31,6 +32,7 @@ module CustomerSettings
 
   def set_data
     @customer = current_customer
+    @customer_form = AddressForm.new(current_customer)
   end
 
   def messages(type)
@@ -45,6 +47,7 @@ module CustomerSettings
         email: [:email],
         password: [:current_password, :password, :password_confirmation])
   end
+=end
 
 
 
